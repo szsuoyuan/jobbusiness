@@ -21,9 +21,9 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="ws/preAddHuman" target="dialog" title="添加商家信息" width="720" height="450"><span>添加</span></a></li>
+			<li><a class="add" href="ws/preAddHuman" target="dialog" title="添加会员信息" width="720" height="450"><span>添加</span></a></li>
 			<li><a class="delete" href="ws/deleteHuman?id={sid_user}" target="ajaxTodo" title="确定要删除吗?" rel="page2"><span>删除</span></a></li>
-			<li><a class="edit" href="ws/humanDetails?id={sid_user}&result=xg" target="dialog" title="修改商家信息" width="600" height="360"><span>修改</span></a></li>
+			<li><a class="edit" href="ws/humanDetails?id={sid_user}&result=xg" target="dialog" title="修改会员信息" width="600" height="360"><span>修改</span></a></li>
 		<%--<li><a class="edit" href="ws/humanDetails?id={sid_user}&result=ck" target="dialog" width="600" height="360"><span>查看</span></a></li>--%>
 			<li class="line">line</li>
 		</ul>

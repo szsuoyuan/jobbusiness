@@ -85,7 +85,7 @@
 		<div id="header">
 			<div class="headerNav">
 				<%-- <a class="logo" href="http://www.fdmaster.com" target="_blank">标志</a> --%>
-				<!-- <span class="logo1" id="mylogo"></span> --><span class="logo2">薇汀企业管理中心</span>
+				<!-- <span class="logo1" id="mylogo"></span> --><span class="logo2">求职易管理中心</span>
 				<ul class="nav">
 					<li><font color="#fff">您好：wtadmin</font></li>
 					<li><a href="http://www.szsuoyuan.com" target="_blank">官网</a></li>
