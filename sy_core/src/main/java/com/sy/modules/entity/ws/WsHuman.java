@@ -12,7 +12,7 @@ public class WsHuman extends ParentEntity {
 	private String human_account; // 账号
 	private String human_password; // 密码
 	private String human_question; // 昵称
-	private String sex;//性别
+	private String human_sex;//性别
 	private String human_answer;//出生年月
 	private String human_phone; // 手机号
 	private String human_qq;
@@ -92,12 +92,13 @@ public class WsHuman extends ParentEntity {
 		this.human_address = human_address;
 	}
 
-	public String getSex() {
-		return sex;
+
+	public String getHuman_sex() {
+		return human_sex;
 	}
 
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setHuman_sex(String human_sex) {
+		this.human_sex = human_sex;
 	}
 
 	public String getHuman_remark() {
