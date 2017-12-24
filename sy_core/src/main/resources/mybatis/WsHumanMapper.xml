@@ -1,115 +1,555 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sy.modules.dao.ws.WsHumanDao">
-	<!-- 会员封装结果集 -->
-	<resultMap type="WsHuman" id="humanResult">
-		<id column="human_id" property="id" />
-		<result column="human_account" property="human_account" />
-		<result column="human_password" property="human_password" />
-		<result column="human_question" property="human_question" />
-		<result column="human_answer" property="human_answer" />
-		<result column="human_phone" property="human_phone" />
-		<result column="human_qq" property="human_qq" />
-		<result column="human_name" property="human_name" />
-		<result column="human_address" property="human_address" />	
-		<result column="create_name" property="createName" />
-		<result column="create_time" property="createTime" />
-		<result column="update_name" property="updateName" />
-		<result column="update_time" property="updateTime" />
-	</resultMap>
-
-	<!-- 分页查询会员信息 -->
-	<select id="findAllHumanByPage" parameterType="map" resultType="WsHuman">
-		select 
-          mn.human_id as id,
-          mn.human_account as  human_account,
-          mn.human_password as human_password,
-          mn.human_question as human_question,
-          mn.human_phone as human_phone,
-          mn.human_name as human_name,
-          mn.human_address as human_address,
-          mn.create_name as createName,
-	      mn.create_time as createTime,
-	      mn.update_name as updateName,
-	      mn.update_time as updateTime
-        from ws_human as mn left join ws_user_human as un on mn.Human_id = un.human_id
-		where un.del_status=1 and un.user_id=#{userid}
-		<if test="account!=null">
-	 	    and mn.human_account like CONCAT('%','${account}','%')
-	 	</if>
-	 	<if test="human_name!=null">
-	 	    and mn.human_name like CONCAT('%','${human_name}','%')
-	 	</if>
-	 	order by mn.create_time DESC
-		<if test="lowerLimit!=null and upperLimit!=null">
-			limit #{lowerLimit},#{upperLimit};
-		</if>
-	</select>
-	
-	<select id="findCountByParam" parameterType="map" resultType="long">
-	    select count(*)
-        from ws_human as mn left join ws_user_human as un on mn.human_id = un.human_id
-		where un.del_status=1 and un.user_id=#{userid}
-		<if test="account!=null">
-	 	    and mn.human_account like CONCAT('%','${account}','%')
-	 	</if>
-	 	<if test="human_name!=null">
-	 	    and mn.human_name like CONCAT('%','${human_name}','%')
-	 	</if>
-	    
-	</select>
-	
-	<!-- 查看单条会员信息 -->
-	<select id="findById" resultMap="humanResult" parameterType="Long">
-		select * from ws_human as mn where mn.human_id=#{id}
-	</select>
-	<!-- 登录 -->
-	<select id="login" resultMap="humanResult">
-		select * from ws_human as mn left join ws_user_human as un on
-		mn.human_id = un.human_id
-		where un.del_status=1
-		and un.user_id=#{0}
-	    and mn.human_account=#{1} and mn.human_password=#{2}
-	</select>
-	<!-- 根据会员账号查询会员信息 -->
-	<select id="findByAccount" resultMap="humanResult" parameterType="String">
-		select * from ws_human as mn where mn.human_account=#{human_account}
-	</select>
-	<!-- 添加会员 -->
-	<insert id="create" parameterType="WsHuman"  keyProperty="id" useGeneratedKeys="true">
-		insert into ws_human(human_account,human_password,human_question,human_answer,human_phone,human_qq,human_name,human_address,create_name,create_time)
-		values(#{human_account},#{human_password},#{human_question},#{human_answer},#{human_phone},#{human_qq},#{human_name},#{human_address},#{createName},#{createTime})
-	</insert>
-	
-	<!--  微信添加会员 -->
-	<insert id="wxcreate" parameterType="WsHuman"  keyProperty="id" useGeneratedKeys="true">
-		insert into ws_human(human_account) values(#{human_account})
-	</insert>
-	
-	<!-- 注册会员与用户关系 -->
-	<insert id="addHumanUser" parameterType="com.sy.modules.entity.ws.WsHumanUser">
-		insert into ws_user_human(human_id,user_id,create_name,create_time)
-		values(#{humanId},#{userId},#{createName},#{createTime});
-	</insert>
-	<!-- 修改会员 -->
-	<update id="update" parameterType="WsHuman">
-		update ws_human
-		<set>
-		    <if test="human_account!=null and human_account!=''">human_account = #{human_account},</if>
-			human_password =#{human_password},
-			human_question =#{human_question},
-		<!--human_answer =#{human_answer}, -->
-			human_phone =#{human_phone},
-		<!--human_qq =#{human_qq},-->
-			human_name =#{human_name},
-			human_address =#{human_address},
-			update_name =#{updateName}
-		</set>
-		where human_id = #{id};
-	</update>
-
-	<!-- 删除会员 -->
-	<update id="deleteById"  parameterType="Long">
-	    update ws_user_human set del_status=0 where human_id = #{id};
-	</update>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.modules.dao.ws.WsHumanMapper" >
+  <resultMap id="BaseResultMap" type="com.sy.modules.entity.ws.WsHuman" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    <id column="human_id" property="humanId" jdbcType="BIGINT" />
+    <result column="human_account" property="humanAccount" jdbcType="VARCHAR" />
+    <result column="human_password" property="humanPassword" jdbcType="VARCHAR" />
+    <result column="human_question" property="humanQuestion" jdbcType="VARCHAR" />
+    <result column="human_answer" property="humanAnswer" jdbcType="VARCHAR" />
+    <result column="human_phone" property="humanPhone" jdbcType="VARCHAR" />
+    <result column="human_qq" property="humanQq" jdbcType="VARCHAR" />
+    <result column="human_name" property="humanName" jdbcType="VARCHAR" />
+    <result column="human_address" property="humanAddress" jdbcType="VARCHAR" />
+    <result column="del_statue" property="delStatue" jdbcType="TINYINT" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="human_sex" property="humanSex" jdbcType="VARCHAR" />
+    <result column="human_remark" property="humanRemark" jdbcType="VARCHAR" />
+    <result column="human_pic_url" property="humanPicUrl" jdbcType="VARCHAR" />
+    <result column="human_status" property="humanStatus" jdbcType="VARCHAR" />
+    <result column="human_education" property="humanEducation" jdbcType="VARCHAR" />
+    <result column="human_address_curr" property="humanAddressCurr" jdbcType="VARCHAR" />
+    <result column="human_address_hope" property="humanAddressHope" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    human_id, human_account, human_password, human_question, human_answer, human_phone, 
+    human_qq, human_name, human_address, del_statue, create_name, create_time, update_name, 
+    update_time, human_sex, human_remark, human_pic_url, human_status, human_education, 
+    human_address_curr, human_address_hope
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sy.modules.entity.ws.WsHumanExample" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ws_human
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from ws_human
+    where human_id = #{humanId,jdbcType=BIGINT}
+  </select>
+  
+  
+   <select id="selectByHumanAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from ws_human
+    where human_account = #{humanAccount,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    delete from ws_human
+    where human_id = #{humanId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sy.modules.entity.ws.WsHumanExample" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    delete from ws_human
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sy.modules.entity.ws.WsHuman" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    <selectKey resultType="java.lang.Long" keyProperty="humanId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ws_human (human_account, human_password, human_question, 
+      human_answer, human_phone, human_qq, 
+      human_name, human_address, del_statue, 
+      create_name, create_time, update_name, 
+      update_time, human_sex, human_remark, 
+      human_pic_url, human_status, human_education, 
+      human_address_curr, human_address_hope)
+    values (#{humanAccount,jdbcType=VARCHAR}, #{humanPassword,jdbcType=VARCHAR}, #{humanQuestion,jdbcType=VARCHAR}, 
+      #{humanAnswer,jdbcType=VARCHAR}, #{humanPhone,jdbcType=VARCHAR}, #{humanQq,jdbcType=VARCHAR}, 
+      #{humanName,jdbcType=VARCHAR}, #{humanAddress,jdbcType=VARCHAR}, #{delStatue,jdbcType=TINYINT}, 
+      #{createName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{humanSex,jdbcType=VARCHAR}, #{humanRemark,jdbcType=VARCHAR}, 
+      #{humanPicUrl,jdbcType=VARCHAR}, #{humanStatus,jdbcType=VARCHAR}, #{humanEducation,jdbcType=VARCHAR}, 
+      #{humanAddressCurr,jdbcType=VARCHAR}, #{humanAddressHope,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sy.modules.entity.ws.WsHuman" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    <selectKey resultType="java.lang.Long" keyProperty="humanId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ws_human
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="humanAccount != null" >
+        human_account,
+      </if>
+      <if test="humanPassword != null" >
+        human_password,
+      </if>
+      <if test="humanQuestion != null" >
+        human_question,
+      </if>
+      <if test="humanAnswer != null" >
+        human_answer,
+      </if>
+      <if test="humanPhone != null" >
+        human_phone,
+      </if>
+      <if test="humanQq != null" >
+        human_qq,
+      </if>
+      <if test="humanName != null" >
+        human_name,
+      </if>
+      <if test="humanAddress != null" >
+        human_address,
+      </if>
+      <if test="delStatue != null" >
+        del_statue,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateName != null" >
+        update_name,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="humanSex != null" >
+        human_sex,
+      </if>
+      <if test="humanRemark != null" >
+        human_remark,
+      </if>
+      <if test="humanPicUrl != null" >
+        human_pic_url,
+      </if>
+      <if test="humanStatus != null" >
+        human_status,
+      </if>
+      <if test="humanEducation != null" >
+        human_education,
+      </if>
+      <if test="humanAddressCurr != null" >
+        human_address_curr,
+      </if>
+      <if test="humanAddressHope != null" >
+        human_address_hope,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="humanAccount != null" >
+        #{humanAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="humanPassword != null" >
+        #{humanPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="humanQuestion != null" >
+        #{humanQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="humanAnswer != null" >
+        #{humanAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="humanPhone != null" >
+        #{humanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="humanQq != null" >
+        #{humanQq,jdbcType=VARCHAR},
+      </if>
+      <if test="humanName != null" >
+        #{humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="humanAddress != null" >
+        #{humanAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="delStatue != null" >
+        #{delStatue,jdbcType=TINYINT},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="humanSex != null" >
+        #{humanSex,jdbcType=VARCHAR},
+      </if>
+      <if test="humanRemark != null" >
+        #{humanRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="humanPicUrl != null" >
+        #{humanPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="humanStatus != null" >
+        #{humanStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="humanEducation != null" >
+        #{humanEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="humanAddressCurr != null" >
+        #{humanAddressCurr,jdbcType=VARCHAR},
+      </if>
+      <if test="humanAddressHope != null" >
+        #{humanAddressHope,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sy.modules.entity.ws.WsHumanExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    select count(*) from ws_human
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    update ws_human
+    <set >
+      <if test="record.humanId != null" >
+        human_id = #{record.humanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.humanAccount != null" >
+        human_account = #{record.humanAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanPassword != null" >
+        human_password = #{record.humanPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanQuestion != null" >
+        human_question = #{record.humanQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanAnswer != null" >
+        human_answer = #{record.humanAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanPhone != null" >
+        human_phone = #{record.humanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanQq != null" >
+        human_qq = #{record.humanQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanName != null" >
+        human_name = #{record.humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanAddress != null" >
+        human_address = #{record.humanAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delStatue != null" >
+        del_statue = #{record.delStatue,jdbcType=TINYINT},
+      </if>
+      <if test="record.createName != null" >
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null" >
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.humanSex != null" >
+        human_sex = #{record.humanSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanRemark != null" >
+        human_remark = #{record.humanRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanPicUrl != null" >
+        human_pic_url = #{record.humanPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanStatus != null" >
+        human_status = #{record.humanStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanEducation != null" >
+        human_education = #{record.humanEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanAddressCurr != null" >
+        human_address_curr = #{record.humanAddressCurr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanAddressHope != null" >
+        human_address_hope = #{record.humanAddressHope,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    update ws_human
+    set human_id = #{record.humanId,jdbcType=BIGINT},
+      human_account = #{record.humanAccount,jdbcType=VARCHAR},
+      human_password = #{record.humanPassword,jdbcType=VARCHAR},
+      human_question = #{record.humanQuestion,jdbcType=VARCHAR},
+      human_answer = #{record.humanAnswer,jdbcType=VARCHAR},
+      human_phone = #{record.humanPhone,jdbcType=VARCHAR},
+      human_qq = #{record.humanQq,jdbcType=VARCHAR},
+      human_name = #{record.humanName,jdbcType=VARCHAR},
+      human_address = #{record.humanAddress,jdbcType=VARCHAR},
+      del_statue = #{record.delStatue,jdbcType=TINYINT},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      human_sex = #{record.humanSex,jdbcType=VARCHAR},
+      human_remark = #{record.humanRemark,jdbcType=VARCHAR},
+      human_pic_url = #{record.humanPicUrl,jdbcType=VARCHAR},
+      human_status = #{record.humanStatus,jdbcType=VARCHAR},
+      human_education = #{record.humanEducation,jdbcType=VARCHAR},
+      human_address_curr = #{record.humanAddressCurr,jdbcType=VARCHAR},
+      human_address_hope = #{record.humanAddressHope,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sy.modules.entity.ws.WsHuman" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    update ws_human
+    <set >
+      <if test="humanAccount != null" >
+        human_account = #{humanAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="humanPassword != null" >
+        human_password = #{humanPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="humanQuestion != null" >
+        human_question = #{humanQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="humanAnswer != null" >
+        human_answer = #{humanAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="humanPhone != null" >
+        human_phone = #{humanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="humanQq != null" >
+        human_qq = #{humanQq,jdbcType=VARCHAR},
+      </if>
+      <if test="humanName != null" >
+        human_name = #{humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="humanAddress != null" >
+        human_address = #{humanAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="delStatue != null" >
+        del_statue = #{delStatue,jdbcType=TINYINT},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null" >
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="humanSex != null" >
+        human_sex = #{humanSex,jdbcType=VARCHAR},
+      </if>
+      <if test="humanRemark != null" >
+        human_remark = #{humanRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="humanPicUrl != null" >
+        human_pic_url = #{humanPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="humanStatus != null" >
+        human_status = #{humanStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="humanEducation != null" >
+        human_education = #{humanEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="humanAddressCurr != null" >
+        human_address_curr = #{humanAddressCurr,jdbcType=VARCHAR},
+      </if>
+      <if test="humanAddressHope != null" >
+        human_address_hope = #{humanAddressHope,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where human_id = #{humanId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sy.modules.entity.ws.WsHuman" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    update ws_human
+    set human_account = #{humanAccount,jdbcType=VARCHAR},
+      human_password = #{humanPassword,jdbcType=VARCHAR},
+      human_question = #{humanQuestion,jdbcType=VARCHAR},
+      human_answer = #{humanAnswer,jdbcType=VARCHAR},
+      human_phone = #{humanPhone,jdbcType=VARCHAR},
+      human_qq = #{humanQq,jdbcType=VARCHAR},
+      human_name = #{humanName,jdbcType=VARCHAR},
+      human_address = #{humanAddress,jdbcType=VARCHAR},
+      del_statue = #{delStatue,jdbcType=TINYINT},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      human_sex = #{humanSex,jdbcType=VARCHAR},
+      human_remark = #{humanRemark,jdbcType=VARCHAR},
+      human_pic_url = #{humanPicUrl,jdbcType=VARCHAR},
+      human_status = #{humanStatus,jdbcType=VARCHAR},
+      human_education = #{humanEducation,jdbcType=VARCHAR},
+      human_address_curr = #{humanAddressCurr,jdbcType=VARCHAR},
+      human_address_hope = #{humanAddressHope,jdbcType=VARCHAR}
+    where human_id = #{humanId,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.sy.modules.entity.ws.WsHumanExample" id="selectByExampleWithRowbounds" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ws_human
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
 </mapper>

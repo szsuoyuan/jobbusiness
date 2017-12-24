@@ -48,9 +48,9 @@ public class OaCustomerVo extends BaseSearchObject<OaCustomerExample> {
 		if (this.getSeaStatus() != null) {
 			criteria.andSeaStatusEqualTo(this.getSeaStatus().byteValue());
 		}
-		if(this.getSysUserId()!=null){
+		/*if(this.getSysUserId()!=null){
 			criteria.andSysUserIdEqualTo(this.getSysUserId().longValue());
-		}
+		}*/
 		return filter;
 	}
 

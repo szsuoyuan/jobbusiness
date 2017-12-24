@@ -50,8 +50,8 @@
 		ws.update_time as updateTime
 		from ws_supplier as ws
 		where 1=1
-		<if test="suppcompany!=null">
-	     and ws.supp_company like "%"#{suppcompany}"%"
+		<if test="suppcompany!=null"> 
+	     and ws.supp_company like   CONCAT('%','${suppcompany}','%')
 	    </if>
 		<if test="lowerLimit!=null and upperLimit != null">
 			limit #{lowerLimit},#{upperLimit}
@@ -61,7 +61,7 @@
     <select id="findCountByParam" parameterType="map" resultType="int">
 		select count(*) from ws_supplier as ws where 1=1
 		<if test="suppcompany!=null">
-	     and ws.supp_company like "%"#{suppcompany}"%"
+	     and ws.supp_company like CONCAT('%','${suppcompany}','%')
 	    </if>
 	</select>
     

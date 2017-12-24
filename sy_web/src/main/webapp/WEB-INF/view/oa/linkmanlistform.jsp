@@ -10,7 +10,7 @@
 		<table class="searchContent" style="float: left;">
 			<tr>
 				<td>
-					联系人姓名：<input type="text" name="lmName" value=""/>
+					岗位名称：<input type="text" name="lmName" value=""/>
 				</td>
 			</tr>
 		</table>
@@ -35,12 +35,12 @@
 	<table class="table" width="100%" layoutH="112">
 		<thead>
 			<tr>
-				<th width="10%">联系人姓名</th>
-				<th width="10%">所属客户</th>
-				<th width="10%">联系人电话</th>
-				<th width="10%">新郎电话</th>
-				<th width="10%">新娘电话</th>
-				<th width="8%">邮箱</th>
+				<th width="10%">岗位名称</th>
+				<th width="10%">所属公司</th>
+				<th width="10%">岗位月薪</th>
+				<th width="10%">岗位地址</th>
+				<th width="10%">饭费</th>
+				<th width="10%">补贴</th>
 				<th width="10%">创建时间</th>
 				<th width="10%">修改时间</th>
 			</tr>
@@ -50,10 +50,10 @@
 					<tr target="sid_user" rel="${lkm['lmId'] }">
 						<td>${lkm['lmName'] }</td>
 						<td>${lkm['cCustomer']}</td>
+						<td>${lkm['lmPhone3'] }</td>
 						<td>${lkm['lmMobile'] }</td>
 						<td>${lkm['lmPhone1'] }</td>
 						<td>${lkm['lmPhone2'] }</td>
-						<td>${lkm['lmEmail'] }</td>
 						<td><fmt:formatDate value="${lkm['createTime']}" pattern="yyyy-MM-dd HH:mm"/></td>
 						<td><fmt:formatDate value="${lkm['updateTime']}" pattern="yyyy-MM-dd HH:mm"/></td>
 					</tr>

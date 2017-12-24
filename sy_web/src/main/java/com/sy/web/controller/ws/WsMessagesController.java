@@ -201,8 +201,8 @@ public class WsMessagesController extends PageSet {
 		wmu.setUserId(id);
 		wmu.setHumanId(humanId);
 		WsMessages wm=new WsMessages();
-		WsHuman obj=humanService.findById(humanId);
-		wm.setCreateName(obj.getHuman_account());
+	//	WsHuman obj=humanService.findById(humanId);
+		//wm.setCreateName(obj.getHumanAccount());
 		try {
 			wm.setMessageTitle(new String(request.getParameter("title").getBytes("iso-8859-1"),"utf-8"));
 			wm.setMessageContent(new String(request.getParameter("content").getBytes("iso-8859-1"),"utf-8"));
@@ -234,8 +234,8 @@ public class WsMessagesController extends PageSet {
 		wmu.setUserId(id);
 		wmu.setHumanId(humanId);
 		WsMessages wm=new WsMessages();
-		WsHuman obj=humanService.findById(humanId);
-		wm.setCreateName(obj.getHuman_account());
+		//WsHuman obj=humanService.findById(humanId);
+		//wm.setCreateName(obj.getHumanAccount());
 		wm.setMessageTitle(request.getParameter("title"));
 		wm.setMessageContent(request.getParameter("content"));
 		boolean success = messageservice.addMessages(wm, wmu);

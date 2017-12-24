@@ -8,7 +8,7 @@
 		<table class="searchContent"  style="float: left;">
 			<tr>
 				<td>
-					供应商名称：
+					门店名称：
 					<input type="text" id="suppcompany" name="suppcompany" value="">
 				</td>
 			</tr>
@@ -20,17 +20,17 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="ws/preAddSupplier" target="dialog" width="620" height="360" title="添加供应商"><span>添加</span></a></li>
+			<li><a class="add" href="ws/preAddSupplier" target="dialog" width="620" height="360" title="添加门店"><span>添加</span></a></li>
 			<!-- <li><a class="delete" href="ws/deleteSupp?id={sid_user}" target="ajaxTodo" title="确定要删除吗?" ><span>删除</span></a></li> -->
-			<li><a class="edit" href="ws/findSuppById?id={sid_user}" target="dialog" width="620" height="360" title="修改供应商" ><span>修改</span></a></li>
+			<li><a class="edit" href="ws/findSuppById?id={sid_user}" target="dialog" width="620" height="360" title="修改门店" ><span>修改</span></a></li>
 			<li class="line">line</li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="112">
 		<thead>
 			<tr>
-				<th width="20%">供应商名称</th>
-				<th width="20%">负责人</th>
+				<th width="20%">门店名称</th>
+				<th width="20%">门店地址</th>
 				<th width="20%">联系电话</th>
 				<th width="10%">创建人</th>
 				<th width="15%">创建时间</th>

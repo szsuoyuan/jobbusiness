@@ -5,58 +5,64 @@
 		<div class="pageFormContent" layoutH="56">
 		<input type="hidden" name="lmId" value="${lmId }" />
 			<p>
-				<label>联系人姓名：</label>
+				<label>岗位名称：</label>
 				<input name="lmName" class="required" type="text" size="30"/>
 			</p>
 			<p>
-				<label>联系人电话：</label>
-				
-				<input name="lmMobile" class="required" type="text" size="30" />
+				<label>岗位月薪：</label>
+				<input  type="text" size="30"  class="required" name="lmPhone3"/>
 			</p>
 			<p>
-				<label>新郎电话：</label>
+				<label>岗位地址：</label>
+				
+				<input name="lmMobile"  type="text" size="30" />
+			</p>
+			<p>
+				<label>返费：</label>
 				<input type="text" size="30" name="lmPhone1" />
 			</p>
 			<p>
-				<label>新娘电话：</label>
+				<label>补贴：</label>
 				<input type="text" size="30"  name="lmPhone2" />
 			</p>
+			
 			<p>
-				<label>委托人电话：</label>
-				<input  type="text" size="30"   name="lmPhone3"/>
-			</p>
-			<p>
-				<label>家长电话：</label>
+				<label>工作内容：</label>
 				<input  type="text" size="30"   name="lmPhone4"/>
 			</p>
 			<p>
-				<label>邮箱：</label>
+				<label>工作环境：</label>
 				<input  type="text" size="30"  name="lmEmail"/>
 			</p>
 			<p>
-				<label>生日：</label>
-				<input type="text" name="lmBirth" class="date" readonly="true"/>
-				<a class="inputDateButton" href="javascript:;">选择</a>
-			</p>
-			
-			<div class="divider"></div>
-			<p>
-				<label>QQ：</label>
-				<input   type="text" size="30"  name="lmQq"/>
-			</p>
-			<p>
-				<label>微信：</label>
-				<input type="text" size="30" name="lmWechat"/>
-			</p>
-			<p>
-				<label>职务：</label>
+				<label>工作时间：</label>
 				<input type="text" size="30" name="lmPost" />
 			</p>
+			
+			<p>
+				<label>工作提示：</label>
+				<input   type="text" size="30"  name="lmQq"/>
+			</p>
+			<div class="divider"></div>
+					<dl class="nowrap">
+					<dt>岗位备注：</dt>
+					<dd><textarea name="lmPhone6" cols="60" rows="6"></textarea></dd>
+				</dl>
+			<%-- 
+				<p>
+					<label>微信：</label>
+					<input type="text" size="30" name="lmWechat"/>
+				</p>
+				<p>
+					<label>职务：</label>
+					<input type="text" size="30" name="lmPost" />
+				</p>
 				<div class="divider"></div>
-			<dl class="nowrap">
-			<dt>联系人简介：</dt>
-			<dd><textarea name="lmPhone6" cols="60" rows="6"></textarea></dd>
-		</dl>
+					<dl class="nowrap">
+					<dt>联系人简介：</dt>
+					<dd><textarea name="lmPhone6" cols="60" rows="6"></textarea></dd>
+				</dl>
+			--%>
 		</div>
 		<div class="formBar">
 			<ul>

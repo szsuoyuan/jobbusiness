@@ -42,7 +42,7 @@ public class WsSupplierController extends PageSet {
 	}
 	
 	/**
-	 * 添加供应商
+	 * 添加门店
 	 * @param request
 	 * @return json
 	 */
@@ -80,14 +80,14 @@ public class WsSupplierController extends PageSet {
 	}
 	
 	/**
-	 * 删除供应商
+	 * 删除门店
 	 * @param request
 	 * @return
 	 */
 	
 	
 	/**
-	 * 查询单个供应商
+	 * 查询单个门店
 	 * @param request
 	 * @return obj
 	 */

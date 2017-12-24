@@ -230,6 +230,6 @@
 		</div>
 	</div>
 </div>
-	<div id="footer">Copyright &copy; 2017 <span>苏州索远团队</span></div>
+	<div id="footer">Copyright &copy; 2017 <span>求职易团队</span></div>
 </body>
 </html>

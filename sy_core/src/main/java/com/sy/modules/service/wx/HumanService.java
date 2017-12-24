@@ -50,7 +50,7 @@ public class HumanService {
 		int count=humanDao.count(openid);
 		if(count==0){
 			humanDao.save(getHuman(openid,userid));
-			wshumanService.wxRegister(openid,userid);
+			//wshumanService.wxRegister(openid,userid);
 			//System.out.println("会员保存成功！");
 		}
 	}

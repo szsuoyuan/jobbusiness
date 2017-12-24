@@ -11,21 +11,21 @@
 		<div class="pageFormContent" layoutH="56" >
 		<input type="hidden" name="id" value="${wssupp.id }" />
 			<div class="unit">
-				<label>供应商名称：</label>
+				<label>门店名称：</label>
 				<input type="text" id="suppcompany" name="suppcompany" size="28"  class="required" value="${wssupp.suppcompany }"/>
-				 <span class="info">&nbsp;&nbsp;提示：输入公司或企业名称</span>
+				 <span class="info">&nbsp;&nbsp;提示：输入门店名称</span>
 			</div>
 			<br><br>
 			<div class="unit">
-				<label>负责人：</label>
+				<label>门店地址：</label>
 				<input type="text" id="suppname" name="suppname" size="28"  class="required" value="${wssupp.suppname }"/>
-			    <span class="info">&nbsp;&nbsp;提示：输入正确的负责人姓名</span>
+			    <span class="info">&nbsp;&nbsp;提示：输入门店地址</span>
 			</div>
 			<br><br>
 			<div class="unit">
 				<label>联系电话：</label>
 				<input type="text" id="supptel" name="supptel" class="required"  size="28" value="${wssupp.supptel}" />
-				 <span class="info">&nbsp;&nbsp;提示：输入正确的联系方式</span>
+				 <span class="info">&nbsp;&nbsp;提示：输入联系方式</span>
 			</div>
 			<br><br>
 			<div class="unit">

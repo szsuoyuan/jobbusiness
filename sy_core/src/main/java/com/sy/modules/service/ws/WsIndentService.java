@@ -59,7 +59,7 @@ public class WsIndentService extends AbstractService<WsIndent, Long, WsIndentDao
 	public WsIndent addIndent(WsIndent indent,List<WsMtProduct> products){
 		//IndentUtil iu = new IndentUtil();
 		//获取商家id
-		String cartNumber = indent.getHuman().getId()+"";
+		String cartNumber = indent.getHuman().getHumanId()+"";
 		//数量
 		Integer count=0;
 		//订单总金额
@@ -72,7 +72,7 @@ public class WsIndentService extends AbstractService<WsIndent, Long, WsIndentDao
 			}
 			for(WsMtProduct p:ps){
 				Map<String,Object> map = new HashMap<String, Object>();
-				map.put("humanId", indent.getHuman().getId());
+				map.put("humanId", indent.getHuman().getHumanId());
 				map.put("productId",p.getId());
 				count+=p.getCount();
 				total += p.getCount()*p.getProductPrice();
@@ -81,7 +81,7 @@ public class WsIndentService extends AbstractService<WsIndent, Long, WsIndentDao
 		}else{//单笔订单
 			for(WsMtProduct product:products){
 				Map<String,Object> map = new HashMap<String, Object>();
-				map.put("humanId",wsHumanUserDao.findByHumanId(indent.getHuman().getId()));
+				map.put("humanId",wsHumanUserDao.findByHumanId(indent.getHuman().getHumanId()));
 				map.put("productId",product.getId());
 				count += product.getCount();
 				total +=product.getProductPrice()*product.getCount();

@@ -29,10 +29,10 @@ public class OaCustomerController {
 	// find all customers by page
 	@RequestMapping(value = "/findAllCustomersByPage", method = {RequestMethod.GET, RequestMethod.POST })
 	public String findAllCustomersByPage(Model model,@ModelAttribute OaCustomerVo customVo, HttpServletRequest request) {
-		SysUser user = SessionUtil.getLoginUser(request);
+		/*SysUser user = SessionUtil.getLoginUser(request);
 		if (null != user) {
 			customVo.setSysUserId(user.getId().intValue());
-		}
+		}*/
 		PageInfo<OaCustomer> customlist = customerservice.findAllCustomersByPage(customVo);
 		model.addAttribute("customlist", customlist);
 		return "oa/customerlist";

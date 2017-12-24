@@ -293,8 +293,8 @@ public class WsIndentController extends PageSet  {
 		request.setAttribute("product", obj);
 		String humanId=request.getParameter("humanId");
 		request.setAttribute("humanId", humanId);
-		WsHuman wshuman=wsHumanService.findById(Long.valueOf(humanId));
-		request.setAttribute("human", wshuman);
+	//	WsHuman wshuman=wsHumanService.findById(Long.valueOf(humanId));
+		//request.setAttribute("human", wshuman);
 		return "ws/app/addIndent";
 	}
 	
@@ -321,7 +321,7 @@ public class WsIndentController extends PageSet  {
 			if(indent.getNumber()!=null){
 				indent = indentservice.findById(indent.getNumber());
 				try {
-					request.getRequestDispatcher("alipay_api?out_trade_no="+indent.getNumber()+"&subject="+indent.getName()+"&total_fee=0.01&humanId="+indent.getHuman().getId()).forward(request, response);
+					request.getRequestDispatcher("alipay_api?out_trade_no="+indent.getNumber()+"&subject="+indent.getName()+"&total_fee=0.01&humanId="+indent.getHuman().getHumanId()).forward(request, response);
 				} catch (ServletException e) {
 					e.printStackTrace();
 				}
@@ -329,12 +329,12 @@ public class WsIndentController extends PageSet  {
 			//手机访问
 			String id = request.getParameter("humanId");
 			if(StringUtils.isNotEmpty(id)){
-				wsHuman = wsHumanService.findById(Long.valueOf(id));
-				if(null!=wsHuman&&null!=wsHuman.getId()){
+			//	wsHuman = wsHumanService.findById(Long.valueOf(id));
+				if(null!=wsHuman&&null!=wsHuman.getHumanId()){
 					indent.setHuman(wsHuman);
-					indent.setName(wsHuman.getHuman_name());
+					indent.setName(wsHuman.getHumanName());
 					//生成订单编号
-					indent.setNumber(indentutil.yieldIndentNumber(wsHuman.getId()).toString());
+					indent.setNumber(indentutil.yieldIndentNumber(wsHuman.getHumanId()).toString());
 				}
 			 }
 			List<WsMtProduct> wmp = new ArrayList<WsMtProduct>();
@@ -349,7 +349,7 @@ public class WsIndentController extends PageSet  {
 			if(paystr.equals("alipay")){
 				try 
 				{
-					request.getRequestDispatcher("alipay_api?out_trade_no="+wi.getNumber()+"&subject="+wi.getName()+"&total_fee=0.01&humanId="+wsHuman.getId()+"").forward(request, response);
+					request.getRequestDispatcher("alipay_api?out_trade_no="+wi.getNumber()+"&subject="+wi.getName()+"&total_fee=0.01&humanId="+wsHuman.getHumanId()+"").forward(request, response);
 				} catch (ServletException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -494,7 +494,7 @@ public class WsIndentController extends PageSet  {
 			WsIndent wi = indentservice.findIndentById(out_trade_no);
 			
 			//User user = wsHumanUserService.findByHumanId((wi.getHuman().getId());
-			SysUser user=userService.findById((wsHumanUserService.findByHumanId(wi.getHuman().getId())).getUserId());
+			SysUser user=userService.findById((wsHumanUserService.findByHumanId(wi.getHuman().getHumanId())).getUserId());
 			System.out.println(user.getAlipayId()+"  "+user.getAlipayAccount()+"  "+user.getAlipayAccount());
 			bool = AlipayNotify.verifyNotify(params,user.getAlipayKey().trim(),user.getAlipayId().trim());
 		} catch (Exception e) {
@@ -676,8 +676,8 @@ public class WsIndentController extends PageSet  {
 		String humanId=request.getParameter("humanId");
 		String sum=request.getParameter("sum");
 		request.setAttribute("humanId", humanId);
-		WsHuman wshuman=wsHumanService.findById(Long.valueOf(humanId));
-		request.setAttribute("wshuman", wshuman);
+		//WsHuman wshuman=wsHumanService.findById(Long.valueOf(humanId));
+		//request.setAttribute("wshuman", wshuman);
 		request.setAttribute("price", price);
 		request.setAttribute("sum", sum);
 		return "ws/app/addIndentCart";		
@@ -751,11 +751,11 @@ public class WsIndentController extends PageSet  {
 		//request.setAttribute("product", obj);
 		String humanId=request.getParameter("humanId");
 		//request.setAttribute("humanId", humanId);
-		WsHuman wshuman=wsHumanService.findById(Long.valueOf(humanId));
-		request.setAttribute("human", wshuman);
+	//	WsHuman wshuman=wsHumanService.findById(Long.valueOf(humanId));
+	//	request.setAttribute("human", wshuman);
 		Map<String,Object> map1=new HashMap<String,Object>();
 		map1.put("product", obj);
-		map1.put("human", wshuman);
+	//	map1.put("human", wshuman);
 		map1.put("humanId", humanId);
 		Gson gson=new Gson();
 		return gson.toJson(map1);

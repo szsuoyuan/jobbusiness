@@ -49,6 +49,7 @@ public class Constants {
 	public static final String REL_PRODUCTMANAGER = "027";
 	public static final String REL_SUPPLIERMANAGER = "032";
 	public static final String REL_SPECMANAGER = "025";
+	public static final String REL_HUMANMANAGER="008";
 
 	// 操作结果
 	public static final String MSG_LOGIN_FAIL = "登录失败!";

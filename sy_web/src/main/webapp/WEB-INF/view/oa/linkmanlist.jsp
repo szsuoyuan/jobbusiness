@@ -10,7 +10,7 @@
 		<table class="searchContent" style="float: left;">
 			<tr>
 				<td>
-					联系人姓名：<input type="text" name="lmName" value=""/>
+					岗位名称：<input type="text" name="lmName" value=""/>
 				</td>
 			</tr>
 		</table>
@@ -25,21 +25,20 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${pageContext.request.contextPath}/oa/precreatelinkman?lmid=${cId}" target="dialog" title="添加联系人" width="880" height="480" ><span>添加</span></a></li>
+			<li><a class="add" href="${pageContext.request.contextPath}/oa/precreatelinkman?lmid=${cId}" target="dialog" title="添加岗位信息" width="880" height="480" ><span>添加</span></a></li>
 			<li><a class="delete" href="${pageContext.request.contextPath}/oa/{sid_user}/deleteLinkman" target="ajaxTodo" title="确认删除吗?" rel="page2"><span>删除</span></a></li>
-			<li><a class="edit" href="${pageContext.request.contextPath}/oa/findLinkmanById/{sid_user}" target="dialog" title="修改联系人" width="880" height="480" ><span>修改</span></a></li>
+			<li><a class="edit" href="${pageContext.request.contextPath}/oa/findLinkmanById/{sid_user}" target="dialog" title="修改岗位信息" width="880" height="480" ><span>修改</span></a></li>
 			<li class="line">line</li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="112">
 		<thead>
 			<tr>
-				<th width="10%">联系人姓名</th>
-				<th width="10%">所属客户</th>
-				<th width="10%">联系人电话</th>
-				<th width="10%">新郎电话</th>
-				<th width="10%">新娘电话</th>
-				<th width="8%">邮箱</th>
+				<th width="10%">岗位名称</th>
+				<th width="10%">岗位月薪</th>
+				<th width="10%">岗位地址</th>
+				<th width="10%">饭费</th>
+				<th width="10%">补贴</th>
 				<th width="10%">创建时间</th>
 				<th width="10%">修改时间</th>
 			</tr>
@@ -48,11 +47,10 @@
 			<c:forEach items="${linkmanlist.list}" var="lkm">
 					<tr target="sid_user" rel="${lkm['lmId'] }">
 						<td>${lkm['lmName'] }</td>
-						<td>${customer['cName'] }</td>
+						<td>${lkm['lmPhone3'] }</td>
 						<td>${lkm['lmMobile'] }</td>
 						<td>${lkm['lmPhone1'] }</td>
 						<td>${lkm['lmPhone2'] }</td>
-						<td>${lkm['lmEmail'] }</td>
 						<td><fmt:formatDate value="${lkm['createTime']}" pattern="yyyy-MM-dd HH:mm"/></td>
 						<td><fmt:formatDate value="${lkm['updateTime']}" pattern="yyyy-MM-dd HH:mm"/></td>
 					</tr>
