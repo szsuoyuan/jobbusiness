@@ -5,11 +5,11 @@
 		<p class="contentTitle">添加会员信息</p>
 		<div class="pageFormContent" layoutH="98">
 			<p>
-				<label>员工帐号：</label>
+				<label>会员账号：</label>
 				<input name="humanAccount" class="required" type="text" size="30"/>
 			</p>
 			<p>
-				<label>员工密码：</label>
+				<label>会员密码：</label>
 				
 				<input name="humanPassword" type="text" size="30" />
 			</p>

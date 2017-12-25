@@ -8,7 +8,7 @@
 		</c:if>
 	<div class="pageFormContent" layoutH="98">
 			<p>
-				<label>员工帐号：</label>
+				<label>会员账号：</label>
 				<input name="humanAccount" class="required" readonly="readonly" type="text" size="30" value="${human['humanAccount'] }"/>
 			</p>
 			<%--
