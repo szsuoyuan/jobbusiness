@@ -2,14 +2,14 @@
 <%@ include file="../ws/pageControl/jstlImport.jsp" %>
 <div class="pageContent">
 	<form method="post" action="${pageContext.request.contextPath}/sys/saveEmployee" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
-		<p class="contentTitle">添加员工</p>
+		<p class="contentTitle">添加经纪人</p>
 		<div class="pageFormContent" layoutH="98">
 			<p>
-				<label>员工姓名：</label>
+				<label>经纪人姓名：</label>
 				<input name="eName" class="required" type="text" size="30"/>
 			</p>
 			<p>
-				<label>员工编号：</label>
+				<label>经纪人编号：</label>
 				
 				<input name="eNumber" type="text" size="30" />
 			</p>
@@ -72,7 +72,7 @@
 				<a class="btnLook" href="sys/lookUpUserList" lookupGroup="user">查找带回</a>		
 			</p>
 			<p>
-				<label>员工状态：</label>
+				<label>经纪人状态：</label>
 				<select name="eState" class="required combox">
 					<option value="1" selected>正常</option>
 					<option value="2" >离职</option>

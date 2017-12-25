@@ -12,7 +12,7 @@
 		<table class="searchContent" style="float: left;">
 			<tr>
 				<td>
-					员工姓名：<input type="text" name="eName" value=""/>
+					经纪人姓名：<input type="text" name="eName" value=""/>
 				</td>
 			</tr>
 		</table>
@@ -27,18 +27,18 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${pageContext.request.contextPath}/sys/precreateemp" target="navTab" title="添加员工" width="820" height="400" ><span>添加</span></a></li>
+			<li><a class="add" href="${pageContext.request.contextPath}/sys/precreateemp" target="navTab" title="添加经纪人" width="820" height="400" ><span>添加</span></a></li>
 			<li><a class="delete" href="${pageContext.request.contextPath}/sys/{sid_user}/deleteEmployee" target="ajaxTodo" title="确认删除吗?" rel="page2"><span>删除</span></a></li>
-			<li><a class="edit" href="${pageContext.request.contextPath}/sys/findEmpById/{sid_user}" target="navTab" title="修改员工"><span>修改</span></a></li>
+			<li><a class="edit" href="${pageContext.request.contextPath}/sys/findEmpById/{sid_user}" target="navTab" title="修改经纪人"><span>修改</span></a></li>
 			<li class="line">line</li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="112">
 		<thead>
 			<tr>
-				<th width="10%">员工姓名</th>
+				<th width="10%">经纪人姓名</th>
 				<th width="8%">账号ID</th>
-				<th width="10%">员工编号</th>
+				<th width="10%">经纪人编号</th>
 				<th width="10%">手机号码</th>
 				<th width="10%">邮箱</th>
 				<th width="5%">性别</th>
