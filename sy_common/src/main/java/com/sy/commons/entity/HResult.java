@@ -6,14 +6,14 @@ import java.util.Map;
  * The Result of DAO Service API execute
  */
 public class HResult<T> {
+	private String code;
 	private Boolean result;
 	private String value;
 	private T objValue;
-
 	private Map<String, Object> paramMap;
-
-	
 	public static HResult<?> DEFAULT_OK = new HResult<>(true, "");
+	
+	public HResult(){}
 
 	public HResult(Boolean result, String value) {
 		this.result = result;
@@ -80,10 +80,20 @@ public class HResult<T> {
 		this.value = value;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("HResult [result=");
 		builder.append(result);
+		builder.append(", code=");
+		builder.append(code);
 		builder.append(", value=");
 		builder.append(value);
 		builder.append(", objValue=");

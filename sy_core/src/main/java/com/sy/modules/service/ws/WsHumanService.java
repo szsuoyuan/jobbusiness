@@ -36,6 +36,7 @@ public class WsHumanService {
 	public boolean addHuman(WsHuman wn){
 		boolean success = false;
 		wn.setCreateTime(new Date());
+		wn.setUpdateTime(new Date());
 		humanmapper.insertSelective(wn);
 		success = true;
 		return success;

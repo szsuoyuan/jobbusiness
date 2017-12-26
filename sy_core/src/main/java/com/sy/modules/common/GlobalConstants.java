@@ -20,4 +20,6 @@ public class GlobalConstants {
 	//服务端临时根目录
 	public static final String IMAGE_TEMP="imagetemp";
 	
+	public static final String UPLOAD_IMAGE_ALIYUN="D:\\qzy_file\\picture\\";
+	
 }

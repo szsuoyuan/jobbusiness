@@ -53,8 +53,9 @@
 					<option value="">请选择</option>
 					<option value="1" selected>大专</option>
 					<option value="2" >本科</option>
-					<option value="3">博士</option>
-					<option value="4">其它</option>
+					<option value="3">硕士</option>
+					<option value="4">博士</option>
+					<option value="5">其它</option>
 				</select>
 			</p>
 			<p>
