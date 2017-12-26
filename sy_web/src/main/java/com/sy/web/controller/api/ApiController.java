@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.sy.commons.entity.HResult;
@@ -25,25 +26,40 @@ public class ApiController extends PageSet {
 	private WsHumanService humanService;
 	
 	//注册会员
-	/*@RequestMapping(value = "/registMember")
+	@RequestMapping(value = "/registHuman")
 	@ResponseBody
-	public HResult<WsHuman> addUserInfo(HttpServletRequest request) {
+	public HResult<WsHuman> registHuman(HttpServletRequest request,@ModelAttribute WsHuman human) {
+		log.info("---entering---method---ApiController---registHuman---");
+		WsHuman human_rep=null;
 		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
 		// 获取表单信息
-		String smaccount = request.getParameter("smaccount");// 帐号
-		String smpass = request.getParameter("smpass"); // 密码
-		String random_num=request.getParameter("randomnum");
-		WsHuman human=humanService.findByAccount(smaccount);
-		if (null != human) {
+		if(null !=human && StringUtils.isNotBlank(human.getHumanAccount())) {
+			human_rep=humanService.findByAccount(human.getHumanAccount());
+		}
+		if (null != human_rep) {
 			result.setResult(false);
 			result.setValue(Constants.MSG_USER_EXIST);
 		} else {
-			//创建会员信息
-			//WsHuman human=new WsHuman();
+			try {
+				//创建会员信息
+				WsHuman humanobj=new WsHuman();
+				humanobj.setHumanAccount(human.getHumanAccount());
+				humanobj.setHumanPassword(human.getHumanPassword());
+				humanobj.setHumanQuestion(human.getHumanQuestion());//昵称
+				humanobj.setHumanSex(human.getHumanSex());//性别
+				humanobj.setHumanAnswer(human.getHumanAnswer());//出生年月
+				humanService.addHuman(humanobj);
+				result.setValue(Constants.MSG_ADD_SUCCESS);
+				result.setObjValue(human);
+			}catch(Exception e) {
+				result.setResult(false);
+				result.setValue(e.getMessage());
+			}
 			
 		}
+		log.info("---leaving---method---ApiController---registHuman---");
 		return result;
-	}*/
+	}
 	
 	//会员登录
 	@RequestMapping(value="/doLogin")
@@ -51,8 +67,8 @@ public class ApiController extends PageSet {
 	public HResult<WsHuman> doLogin(HttpServletRequest request){
 		log.info("---entering---method---ApiController---doLogin---");
 		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
-		String smaccount = request.getParameter("smaccount");
-		String smpass = request.getParameter("smpass");
+		String smaccount = request.getParameter("humanAccount");
+		String smpass = request.getParameter("humanPassword");
 		try{
 			if(StringUtils.isNotEmpty(smaccount)&&StringUtils.isNotEmpty(smpass)){
 				WsHuman human=humanService.humanLogin(smaccount, smpass);
