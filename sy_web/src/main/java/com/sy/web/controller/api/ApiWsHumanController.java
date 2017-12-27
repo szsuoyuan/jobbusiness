@@ -36,7 +36,11 @@ import com.sy.modules.service.ws.WsHumanService;
 import com.sy.web.commons.Constants;
 import com.sy.web.commons.PageSet;
 import com.sy.web.commons.PictureUtil;
-
+/**
+ * 会员相关接口
+ * @author shishengbin
+ *
+ */
 @Controller
 @RequestMapping(value = "/api/wap")
 public class ApiWsHumanController extends PageSet {
@@ -114,7 +118,7 @@ public class ApiWsHumanController extends PageSet {
 	@RequestMapping(value = "/updateHuman")
 	@ResponseBody
 	public HResult<WsHuman> updatehuman(HttpServletRequest request,@ModelAttribute WsHuman human){
-		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
+		HResult<WsHuman> result = new HResult<WsHuman>(false, "");
 		int flag=-1;
 		try{
 			if(null != human){
@@ -141,7 +145,7 @@ public class ApiWsHumanController extends PageSet {
 			WsHuman human = humanService.findHuman(humanId.intValue());
 			if(null != human){
 				result.setCode(Constants.SUCCESS);
-				result.setValue(Constants.MSG_LOGIN_SUCCESS);
+				result.setValue(Constants.MSG_GET_SUCCESS);
 				result.setObjValue(human);
 			}
 		}catch(Exception e){
@@ -152,6 +156,7 @@ public class ApiWsHumanController extends PageSet {
 		return result;
 	}
 	
+	//上传会员头像
 	@RequestMapping(value = "/uploadHumanPic")
 	@ResponseBody
 	public Map<String,String> updatePersonHead(HttpServletRequest request,
