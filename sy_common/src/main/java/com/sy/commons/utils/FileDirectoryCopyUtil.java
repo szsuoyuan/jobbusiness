@@ -3,7 +3,8 @@ package com.sy.commons.utils;
 import java.io.*;
 
 /**
- * @author Toby 复制文件夹或文件夹
+ * @author sss 复制文件夹或文件夹
+ * @date 2017/12/27
  */
 public class FileDirectoryCopyUtil {
 
