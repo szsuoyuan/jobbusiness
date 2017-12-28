@@ -43,7 +43,7 @@ public class ImgUploadUtil {
 		} catch (QiniuException e) {
 			Response r = e.response;
 			// 请求失败时打印的异常的信息
-			System.out.println(r.toString());
+		//	System.out.println(r.toString());
 			try {
 				// 响应的文本信息
 				//System.out.println(r.bodyString());

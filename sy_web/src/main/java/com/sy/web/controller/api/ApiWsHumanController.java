@@ -183,23 +183,26 @@ public class ApiWsHumanController extends PageSet {
 		//创建头像的文件名
 		SimpleDateFormat simpleFormat = new SimpleDateFormat("MMddHHmmsss");
 		String filename=simpleFormat.format(new Date())+ new Random().nextInt(1000);
+		String realPath=request.getSession().getServletContext().getRealPath("/");
+		log.info("---项目路径：----"+realPath+"---");
 		//创建保存头像的文件
 		//D:\\ndb_file\\picture\\
-	    String savePath = GlobalConstants.UPLOAD_IMAGE_ALIYUN+humanId+"\\"+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY);
+	    String savePath =realPath+GlobalConstants.IMAGE_TEMP+humanId+GlobalConstants.SEPARATOR+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY);
 	    FileCreate.createDir(savePath);
 	    //保存头像到指定的文件夹内
 	    PictureUtil.SaveFileFromInputStream(input, savePath,filename+".jpg");
 	    //保存到数据库中的头像路径
-	    String dbpath=ws.getHumanAccount()+"/"+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY)+"/"+filename;
+	    String dbpath=ws.getHumanAccount()+"/"+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY)+GlobalConstants.SEPARATOR+filename;
 	    //调用put方法上传
-	    upload.put(savePath+"\\"+filename+".jpg",dbpath, auth.uploadToken(GlobalConstants.BUCKET_NAME));
-	    FileDirectoryCopyUtil.del(GlobalConstants.UPLOAD_IMAGE_ALIYUN);					         
+	    upload.put(savePath+GlobalConstants.SEPARATOR+filename+".jpg",dbpath, auth.uploadToken(GlobalConstants.BUCKET_NAME));
+	    //删除创建的临时目录
+	    FileDirectoryCopyUtil.del(savePath);					         
 	    ws.setHumanPicUrl(dbpath);
 	    ws.setUpdateName(humanId+"");
 	    humanService.updateHuman(ws);
 		rmap.put("humanId", ws.getHumanId()+"");
 		//rmap.put("human_nickname", ws.getHuman_nickname()!=null?ws.getHuman_nickname().trim():"");
-		if(ws.getHumanPicUrl()!=null&&ws.getHumanPicUrl().trim().length()>0){
+		if(null!=ws.getHumanPicUrl()&& ws.getHumanPicUrl().trim().length()>0){
 			rmap.put("humanPicUrl", GlobalConstants.DB_IMAGE_FILE+ws.getHumanPicUrl().trim());
 		}else{
 			rmap.put("humanPicUrl", "");
