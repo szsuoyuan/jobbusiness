@@ -125,8 +125,9 @@ public class ApiWsHumanController extends PageSet {
 				flag=humanService.updateHuman(human);
 				if(flag>0){
 					result.setCode(Constants.SUCCESS);
-					result.setValue(Constants.MSG_LOGIN_SUCCESS);
-					result.setObjValue(human);
+					result.setResult(true);
+					result.setValue(Constants.MSG_UPDATE_SUCCESS);
+					result.setObjValue(humanService.findHuman(human.getHumanId().intValue()));
 				}
 			}
 		}catch(Exception e){
@@ -139,6 +140,7 @@ public class ApiWsHumanController extends PageSet {
 
 	//查看个人信息
 	@RequestMapping(value="/humanDetails")
+	@ResponseBody
 	public HResult<WsHuman> humanDetails(HttpServletRequest request,@RequestParam(value="humanId")Long humanId) {
 		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
 		try{
