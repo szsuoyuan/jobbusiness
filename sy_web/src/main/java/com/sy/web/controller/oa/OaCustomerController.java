@@ -37,6 +37,7 @@ public class OaCustomerController {
 		model.addAttribute("customlist", customlist);
 		return "oa/customerlist";
 	}
+	
 
 	// prepare add
 	@RequestMapping(value = "/precreatecustomer", method = { RequestMethod.GET,RequestMethod.POST })

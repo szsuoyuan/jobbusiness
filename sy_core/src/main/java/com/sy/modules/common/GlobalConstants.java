@@ -18,6 +18,6 @@ public class GlobalConstants {
 	public static final String BUCKET_NAME = "vhomepic";
 	
 	//服务端临时根目录
-	public static final String IMAGE_TEMP="imagetemp";
+	public static final String IMAGE_TEMP="/imagetemp";
 	
 }

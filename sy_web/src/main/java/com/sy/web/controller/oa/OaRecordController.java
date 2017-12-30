@@ -32,7 +32,7 @@ public class OaRecordController {
 
 	// find all records by page
 	@RequestMapping(value = "/findAllRecordsByPage/{cId}", method = {RequestMethod.GET, RequestMethod.POST })
-	public String findAllRecordsByPage(Model model,@PathVariable Long cId, @ModelAttribute OaRecordVo recordVo, HttpServletRequest request) {
+	public String findAllRecordsByPageForCid(Model model,@PathVariable Long cId, @ModelAttribute OaRecordVo recordVo, HttpServletRequest request) {
 		if(null !=cId && cId>0){
 			recordVo.setcId(cId);
 			PageInfo<OaRecord> recordlist = recordservice.findAllRecordsByPage(recordVo);
@@ -40,6 +40,13 @@ public class OaRecordController {
 			model.addAttribute("cId", cId);
 		}
 		return "oa/recordlist";
+	}
+	
+	@RequestMapping(value = "/findAllRecordsByPage", method = {RequestMethod.GET, RequestMethod.POST })
+	public String findAllRecordsByPage(Model model, @ModelAttribute OaRecordVo recordVo, HttpServletRequest request) {
+			PageInfo<OaRecord> recordlist = recordservice.findAllRecordsByPage(recordVo);
+			model.addAttribute("recordlist", recordlist);
+			return "oa/recordlistform";
 	}
 
 	// prepare add

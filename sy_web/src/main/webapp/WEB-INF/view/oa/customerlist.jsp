@@ -28,7 +28,9 @@
 			<li><a class="add" href="${pageContext.request.contextPath}/oa/precreatecustomer?param=cus" target="navTab" title="添加公司" width="820" height="400" ><span>添加</span></a></li>
 			<li><a class="delete" href="${pageContext.request.contextPath}/oa/{sid_user}/deleteCustomer" target="ajaxTodo" title="确认删除吗?" rel="page2"><span>删除</span></a></li>
 			<li><a class="edit" href="${pageContext.request.contextPath}/oa/findCustomerById/{sid_user}" target="navTab" title="修改公司"><span>修改</span></a></li>
+			<li class="line">line</li>
 			<li><a class="edit" href="${pageContext.request.contextPath}/oa/findAllLinkmansByPage/{sid_user}" target="navTab"	rel="020" title="查看岗位信息" ><span>岗位信息</span></a></li>
+			<li><a class="edit" href="${pageContext.request.contextPath}/oa/findAllRecordsByPage/{sid_user}" target="navTab"	rel="040" title="查看临时工记录" ><span>临时工信息</span></a></li>
 			<li class="line">line</li>
 		</ul>
 	</div>
@@ -47,7 +49,7 @@
 		<tbody>
 			<c:forEach items="${customlist.list}" var="cus">
 					<tr target="sid_user" rel="${cus['cId'] }">
-						<td><a class="sortfont" target="navTab" title="查看联系人" href="${pageContext.request.contextPath}/oa/findAllLinkmansByPage/${cus['cId'] }">${cus['cName'] }</a></td>
+						<td><a class="sortfont" target="navTab" title="查看岗位信息" href="${pageContext.request.contextPath}/oa/findAllLinkmansByPage/${cus['cId'] }">${cus['cName'] }</a></td>
 						<td>${cus['cLuckyDay'] }</td>
 						<td>${cus['cMobile'] }</td>
 						<td>${cus['cLinkman'] }</td>

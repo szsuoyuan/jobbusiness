@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ include file="../ws/pageControl/jstlImport.jsp" %>
+<form id="pagerForm" method="post" action="${pageContext.request.contextPath}/oa/findAllRecordsByPage">
+    <input type="hidden" name="pageNum" value="1"/>
+	<input type="hidden" name="numPerPage" value="${recordlist.pageSize }"/><!-- 每页显示多少条 -->
+</form>
 <div class="pageHeader">
 	<form onsubmit="return navTabSearch(this);" action="${pageContext.request.contextPath}/oa/findAllRecordsByPage" method="post">
 	<div class="searchBar">
@@ -25,10 +29,6 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${pageContext.request.contextPath}/oa/precreaterecord?cid=${cId}" target="dialog" title="添加临时工" width="650" height="400" ><span>添加</span></a></li>
-			<li><a class="delete" href="${pageContext.request.contextPath}/oa/{sid_user}/deleteRecord" target="ajaxTodo" title="确认删除吗?" rel="page2"><span>删除</span></a></li>
-			<li><a class="edit" href="${pageContext.request.contextPath}/oa/findRecordById/{sid_user}" target="dialog" title="修改临时工" width="650" height="400" ><span>修改</span></a></li>
-			<li class="line">line</li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="112">

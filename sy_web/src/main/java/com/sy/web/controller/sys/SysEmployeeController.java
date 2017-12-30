@@ -39,6 +39,19 @@ public class SysEmployeeController {
 		model.addAttribute("emlist", emlist);
 		return "sys/employeelist";
 	}
+	
+	
+	@RequestMapping(value = "/findAllEmployeesForLookUp", method = { RequestMethod.GET,RequestMethod.POST })
+	public String findAllEmployeesForLookUp(Model model,@ModelAttribute SysEmployeeVo emVo, HttpServletRequest request) {
+		SysUser user=SessionUtil.getLoginUser(request);
+		if(null!=user){
+			emVo.setSysUserId(user.getParentid());
+		}
+		PageInfo<SysEmployee> emlist= emservice.findAllSysEmployeesByPage(emVo);
+		model.addAttribute("emlist", emlist);
+		return "sys/employeelistLookUp";
+	}
+	
 	//预添加
 	@RequestMapping(value = "/precreateemp", method = { RequestMethod.GET,RequestMethod.POST })
 	public String precreateemp(){

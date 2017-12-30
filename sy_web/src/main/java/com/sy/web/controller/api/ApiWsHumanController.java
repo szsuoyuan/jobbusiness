@@ -1,16 +1,9 @@
 package com.sy.web.controller.api;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,22 +13,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import sun.misc.BASE64Decoder;
-
-import com.qiniu.storage.UploadManager;
-import com.qiniu.util.Auth;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.sy.commons.entity.HResult;
 import com.sy.commons.utils.DateUtil;
 import com.sy.commons.utils.FileCreate;
-import com.sy.commons.utils.FileDirectoryCopyUtil;
 import com.sy.modules.common.GlobalConstants;
 import com.sy.modules.entity.ws.WsHuman;
 import com.sy.modules.exception.ApplicationException;
 import com.sy.modules.service.ws.WsHumanService;
+import com.sy.modules.utils.DataTool;
+import com.sy.modules.utils.ImgUploadUtil;
 import com.sy.web.commons.Constants;
 import com.sy.web.commons.PageSet;
-import com.sy.web.commons.PictureUtil;
 /**
  * 会员相关接口
  * @author shishengbin
@@ -158,60 +148,77 @@ public class ApiWsHumanController extends PageSet {
 		return result;
 	}
 	
+	
 	//上传会员头像
 	@RequestMapping(value = "/uploadHumanPic")
 	@ResponseBody
-	public Map<String,String> updatePersonHead(HttpServletRequest request,
-			@RequestParam(value="humanId",required=true) Long humanId,@RequestParam(value="humanPicUrl") String humanPicUrl) throws IOException{
-		if(humanId==null){
-			humanId=0L;
+	public HResult<?> updatePersonHead(MultipartHttpServletRequest request,
+			@RequestParam(value="humanId",required=true) Long humanId,
+			@RequestParam(value="humanPicUrl") String humanPicUrl) throws IOException{
+		log.info("---entering---method---ApiController---uploadHumanPic---picupload()---");
+		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
+		WsHuman ws =null;
+		if(null!=humanId){
+			 ws = humanService.findHuman(humanId.intValue());
 		}
-		WsHuman ws = humanService.findHuman(humanId.intValue());
-		Map<String,String> rmap = new HashMap<String,String>();
-		if(ws==null||ws.getHumanId()==null){
-			return rmap;
+		String fileNameSuffix = null;
+		String fileName = null;
+		//int width=Integer.parseInt(request.getParameter("width"));
+		//int height=Integer.parseInt(request.getParameter("height"));
+		// 项目在容器中实际发布运行的根路径
+		//子文件夹
+		String subFile=GlobalConstants.IMAGE_TEMP+GlobalConstants.SEPARATOR+humanId;
+		System.out.println("---Temp path---"+subFile+"---");
+		//生成唯一文件名
+		//图片保存临时路径
+		String savePath =subFile;
+		//创建目录
+		FileCreate.createDir(savePath);	
+		//文件格式验证
+		String picFormat=".jpg.png.gif.bmp";
+		if (null != humanPicUrl && !"".equals(humanPicUrl)) {
+			try {
+				MultipartFile mf = request.getFile(humanPicUrl);
+				fileName = mf.getOriginalFilename();
+				String finalFilename=Constants.APPIMAGES+humanId+GlobalConstants.SEPARATOR+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY)+GlobalConstants.SEPARATOR+DataTool.getUUID()+fileName;
+				if (null != mf && !"".equals(mf)) {
+					fileNameSuffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+					fileNameSuffix=fileNameSuffix.toLowerCase();
+					if(picFormat.contains(fileNameSuffix))
+					{
+						if(mf.getInputStream().available()<=300*1024)
+						{
+							//	BufferedImage bi=ImageIO.read(mf.getInputStream());
+								String path=savePath+GlobalConstants.SEPARATOR+fileName;
+								File file=new File(path);
+								mf.transferTo(file);
+								ImgUploadUtil.upload(path,finalFilename);
+								file.delete();
+								//返回状态，及文件名
+								//out.write("{'state':'0','fileName':'" +GlobalConstants.DB_IMAGE_FILE+'/'+ finalFilename + "','updateP':'" + humanPicUrl+ "'}");
+								ws.setHumanPicUrl(GlobalConstants.DB_IMAGE_FILE+'/'+ finalFilename);
+								result.setCode(Constants.SUCCESS);
+								result.setObjValue(ws);
+							}
+					}
+					else{
+						//out.write("{'state':'2'}");//图片大小超出
+						result.setCode(Constants.ERROR);
+						result.setResult(false);
+					}
+							
+					}
+					else
+						result.setCode(Constants.ERROR);
+						result.setResult(false);
+				}catch (Exception e) {
+					e.printStackTrace();
+					result.setCode(Constants.ERROR);
+					result.setResult(false);
+				}
+			} 
+		log.info("---leaving---method---ApiController---uploadHumanPic---picupload()---");
+		return result;
 		}
-		byte[] pbyte = new BASE64Decoder().decodeBuffer(humanPicUrl);  
-		for (int i = 0; i < pbyte.length; ++i) {  
-	        if (pbyte[i] < 0) {  
-	            // 调整异常数据  
-	            pbyte[i] += 256;  
-	        }  
-	    }
-		InputStream input = new ByteArrayInputStream(pbyte);
-		//七牛云
-		Auth auth = Auth.create(GlobalConstants.ACCESS_KEY, GlobalConstants.SECRET_KEY);//密匙配置
-		UploadManager upload = new UploadManager();//创建上传对象
-		//创建头像的文件名
-		SimpleDateFormat simpleFormat = new SimpleDateFormat("MMddHHmmsss");
-		String filename=simpleFormat.format(new Date())+ new Random().nextInt(1000);
-		String realPath=request.getSession().getServletContext().getRealPath("/");
-		log.info("---项目路径：----"+realPath+"---");
-		//创建保存头像的文件
-		//D:\\ndb_file\\picture\\
-	    String savePath =realPath+GlobalConstants.IMAGE_TEMP+humanId+GlobalConstants.SEPARATOR+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY);
-	    FileCreate.createDir(savePath);
-	    //保存头像到指定的文件夹内
-	    PictureUtil.SaveFileFromInputStream(input, savePath,filename+".jpg");
-	    //保存到数据库中的头像路径
-	    String dbpath=ws.getHumanAccount()+"/"+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY)+GlobalConstants.SEPARATOR+filename;
-	    //调用put方法上传
-	    upload.put(savePath+GlobalConstants.SEPARATOR+filename+".jpg",dbpath, auth.uploadToken(GlobalConstants.BUCKET_NAME));
-	    //删除创建的临时目录
-	    FileDirectoryCopyUtil.del(savePath);					         
-	    ws.setHumanPicUrl(dbpath);
-	    ws.setUpdateName(humanId+"");
-	    humanService.updateHuman(ws);
-		rmap.put("humanId", ws.getHumanId()+"");
-		//rmap.put("human_nickname", ws.getHuman_nickname()!=null?ws.getHuman_nickname().trim():"");
-		if(null!=ws.getHumanPicUrl()&& ws.getHumanPicUrl().trim().length()>0){
-			rmap.put("humanPicUrl", GlobalConstants.DB_IMAGE_FILE+ws.getHumanPicUrl().trim());
-		}else{
-			rmap.put("humanPicUrl", "");
-		}
-		//rmap.put("human_signature", ws.getHuman_signature()!=null?ws.getHuman_signature().trim():"");
-		//rmap.put("human_sex", ws.getHuman_sex()!=null?ws.getHuman_sex().trim():"");
-		return rmap;
-	}
-	
+		
 }

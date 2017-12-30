@@ -38,6 +38,7 @@ public class Constants {
 	public static final String REL_LINKMANMANAGER="020";
 	public static final String REL_RECORDMANAGER="040";
 	public static final String REL_PARENTMENU = "page9";
+	public static final String REL_ORDERMANAGER="030";
 
 	// ws
 	public static final String REL_SELFMODULE = "page27";

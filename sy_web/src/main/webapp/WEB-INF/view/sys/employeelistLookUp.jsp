@@ -60,7 +60,7 @@
 						<td>${em["eState"]==1?"正常":"离职"}</td>
 						<td><fmt:formatDate value="${em['createTime']}" pattern="yyyy-MM-dd HH:mm"/></td>
 						<td><fmt:formatDate value="${em['updateTime']}" pattern="yyyy-MM-dd HH:mm"/></td>
-					<td><a class="btnSelect" href="javascript:$.bringBack({id:'${em.eId }', userName:'${em.eName}'})" title="查找带回">选择</a></td>
+						<td><a class="btnSelect" href="javascript:$.bringBack({id:'${em.eId }', userName:'${em.eName}'})" title="查找带回">选择</a></td>
 					</tr>
 			</c:forEach>
 			
