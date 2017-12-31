@@ -28,7 +28,7 @@ public class PictureUtil {
 	// 将图片流保存至磁盘路径
 	public static void SaveFileFromInputStream(InputStream stream, String path,
 			String filename) throws IOException {
-		FileOutputStream fs = new FileOutputStream(path + "\\" + filename);
+		FileOutputStream fs = new FileOutputStream(path + "/" + filename);
 		byte[] buffer = new byte[1024];
 		int byteread = 0;
 		while ((byteread = stream.read(buffer)) != -1) {

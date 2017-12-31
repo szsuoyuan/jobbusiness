@@ -1,8 +1,14 @@
 package com.sy.web.controller.api;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,19 +19,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import sun.misc.BASE64Decoder;
+
+import com.qiniu.storage.UploadManager;
+import com.qiniu.util.Auth;
 import com.sy.commons.entity.HResult;
 import com.sy.commons.utils.DateUtil;
 import com.sy.commons.utils.FileCreate;
+import com.sy.commons.utils.FileDirectoryCopyUtil;
 import com.sy.modules.common.GlobalConstants;
 import com.sy.modules.entity.ws.WsHuman;
 import com.sy.modules.exception.ApplicationException;
 import com.sy.modules.service.ws.WsHumanService;
-import com.sy.modules.utils.DataTool;
-import com.sy.modules.utils.ImgUploadUtil;
 import com.sy.web.commons.Constants;
 import com.sy.web.commons.PageSet;
+import com.sy.web.commons.PictureUtil;
 /**
  * 会员相关接口
  * @author shishengbin
@@ -43,7 +52,7 @@ public class ApiWsHumanController extends PageSet {
 	@RequestMapping(value = "/registHuman")
 	@ResponseBody
 	public HResult<WsHuman> registHuman(HttpServletRequest request,@ModelAttribute WsHuman human) {
-		log.info("---entering---method---ApiController---registHuman---");
+		log.info("-----entering---method---ApiController---registHuman-----");
 		WsHuman human_rep=null;
 		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
 		// 获取表单信息
@@ -72,7 +81,7 @@ public class ApiWsHumanController extends PageSet {
 				result.setValue(e.getMessage());
 			}
 		}
-		log.info("---leaving---method---ApiController---registHuman---");
+		log.info("-----leaving---method---ApiController---registHuman-----");
 		return result;
 	}
 	
@@ -82,14 +91,28 @@ public class ApiWsHumanController extends PageSet {
 	public HResult<WsHuman> doLogin(HttpServletRequest request){
 		log.info("---entering---method---ApiController---doLogin---");
 		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
+		String loginStatus=request.getParameter("loginStatus");
 		String smaccount = request.getParameter("humanAccount");
 		String smpass = request.getParameter("humanPassword");
 		try{
-			if(StringUtils.isNotBlank(smaccount)&&StringUtils.isNotBlank(smpass)){
-				WsHuman human=humanService.humanLogin(smaccount, smpass);
-				result.setCode(Constants.SUCCESS);
-				result.setValue(Constants.MSG_LOGIN_SUCCESS);
-				result.setObjValue(human);
+			if(StringUtils.isNotBlank(smaccount)&&StringUtils.isNotBlank(smpass)&&StringUtils.isNotBlank(loginStatus)){
+				if(loginStatus.equals(1)){
+					WsHuman human=humanService.findByAccount(smaccount);
+					if(null == human){
+						WsHuman wshuman =new WsHuman();
+						wshuman.setHumanAccount(smaccount);
+						humanService.addHuman(wshuman);
+					}
+					result.setCode(Constants.SUCCESS);
+					result.setValue(Constants.MSG_LOGIN_SUCCESS);
+					result.setObjValue(human);
+				}
+				if(loginStatus.equals(2)){
+					WsHuman human=humanService.humanLogin(smaccount, smpass);
+					result.setCode(Constants.SUCCESS);
+					result.setValue(Constants.MSG_LOGIN_SUCCESS);
+					result.setObjValue(human);
+				}
 			}
 		} catch (ApplicationException e){
 			result.setCode(Constants.ERROR);
@@ -103,6 +126,38 @@ public class ApiWsHumanController extends PageSet {
 		log.info("---leaving---method---ApiController---doLogin---");
 		return result;
 	}
+	
+	//修改密码
+	@RequestMapping(value = "/changePassword")
+	@ResponseBody
+	public HResult<WsHuman> changePassword(@RequestParam("humanAccount") String humanAccount, @RequestParam("humanPassword") String humanPassword) {
+		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
+		WsHuman human=null;
+		if(StringUtils.isNotBlank(humanAccount)){
+			human=humanService.findByAccount(humanAccount);
+		}
+		if (human != null) {
+			try{
+				if(StringUtils.isNotBlank(humanPassword)){
+					human.setHumanPassword(humanPassword);
+					humanService.updateHuman(human);
+					result.setCode(Constants.SUCCESS);
+					result.setValue(Constants.MSG_GET_SUCCESS);
+					result.setObjValue(human);
+				}
+			}catch(Exception e){
+				result.setCode(Constants.ERROR);
+				result.setResult(false);
+				result.setValue(e.getMessage());
+			}
+			
+		} else {
+			result.setResult(false);
+			result.setValue(Constants.MSG_HUMAN_EXIST);
+		}
+		return result;
+	}
+	
 	
 	//修改个人信息
 	@RequestMapping(value = "/updateHuman")
@@ -152,73 +207,57 @@ public class ApiWsHumanController extends PageSet {
 	//上传会员头像
 	@RequestMapping(value = "/uploadHumanPic")
 	@ResponseBody
-	public HResult<?> updatePersonHead(MultipartHttpServletRequest request,
+	public HResult<WsHuman> updatePersonHead(HttpServletRequest request,
 			@RequestParam(value="humanId",required=true) Long humanId,
 			@RequestParam(value="humanPicUrl") String humanPicUrl) throws IOException{
 		log.info("---entering---method---ApiController---uploadHumanPic---picupload()---");
 		HResult<WsHuman> result = new HResult<WsHuman>(true, "");
-		WsHuman ws =null;
-		if(null!=humanId){
-			 ws = humanService.findHuman(humanId.intValue());
+		if(humanId==null){
+			humanId=0L;
 		}
-		String fileNameSuffix = null;
-		String fileName = null;
-		//int width=Integer.parseInt(request.getParameter("width"));
-		//int height=Integer.parseInt(request.getParameter("height"));
-		// 项目在容器中实际发布运行的根路径
-		//子文件夹
-		String subFile=GlobalConstants.IMAGE_TEMP+GlobalConstants.SEPARATOR+humanId;
-		System.out.println("---Temp path---"+subFile+"---");
-		//生成唯一文件名
-		//图片保存临时路径
-		String savePath =subFile;
-		//创建目录
-		FileCreate.createDir(savePath);	
-		//文件格式验证
-		String picFormat=".jpg.png.gif.bmp";
-		if (null != humanPicUrl && !"".equals(humanPicUrl)) {
-			try {
-				MultipartFile mf = request.getFile(humanPicUrl);
-				fileName = mf.getOriginalFilename();
-				String finalFilename=Constants.APPIMAGES+humanId+GlobalConstants.SEPARATOR+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY)+GlobalConstants.SEPARATOR+DataTool.getUUID()+fileName;
-				if (null != mf && !"".equals(mf)) {
-					fileNameSuffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
-					fileNameSuffix=fileNameSuffix.toLowerCase();
-					if(picFormat.contains(fileNameSuffix))
-					{
-						if(mf.getInputStream().available()<=300*1024)
-						{
-							//	BufferedImage bi=ImageIO.read(mf.getInputStream());
-								String path=savePath+GlobalConstants.SEPARATOR+fileName;
-								File file=new File(path);
-								mf.transferTo(file);
-								ImgUploadUtil.upload(path,finalFilename);
-								file.delete();
-								//返回状态，及文件名
-								//out.write("{'state':'0','fileName':'" +GlobalConstants.DB_IMAGE_FILE+'/'+ finalFilename + "','updateP':'" + humanPicUrl+ "'}");
-								ws.setHumanPicUrl(GlobalConstants.DB_IMAGE_FILE+'/'+ finalFilename);
-								result.setCode(Constants.SUCCESS);
-								result.setObjValue(ws);
-							}
-					}
-					else{
-						//out.write("{'state':'2'}");//图片大小超出
-						result.setCode(Constants.ERROR);
-						result.setResult(false);
-					}
-							
-					}
-					else
-						result.setCode(Constants.ERROR);
-						result.setResult(false);
-				}catch (Exception e) {
-					e.printStackTrace();
-					result.setCode(Constants.ERROR);
-					result.setResult(false);
-				}
-			} 
+		WsHuman ws = humanService.findHuman(humanId.intValue());
+		Map<String,String> rmap = new HashMap<String,String>();
+		if(ws==null||ws.getHumanId()==null){
+			result.setCode(Constants.ERROR);
+			result.setResult(false);
+		}
+		byte[] pbyte = new BASE64Decoder().decodeBuffer(humanPicUrl);  
+		for (int i = 0; i < pbyte.length; ++i) {  
+	        if (pbyte[i] < 0) {  
+	            // 调整异常数据  
+	            pbyte[i] += 256;  
+	        }  
+	    }
+		InputStream input = new ByteArrayInputStream(pbyte);
+		//七牛云
+		Auth auth = Auth.create(GlobalConstants.ACCESS_KEY, GlobalConstants.SECRET_KEY);//密匙配置
+		UploadManager upload = new UploadManager();//创建上传对象
+		//创建头像的文件名
+		SimpleDateFormat simpleFormat = new SimpleDateFormat("MMddHHmmsss");
+		String filename=simpleFormat.format(new Date())+ new Random().nextInt(1000);
+		//创建保存头像的文件
+	    String savePath = GlobalConstants.IMAGE_TEMP_LINUX+GlobalConstants.SEPARATOR+humanId+GlobalConstants.SEPARATOR+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY);
+	    FileCreate.createDir(savePath);
+	    //保存头像到指定的文件夹内
+		PictureUtil.SaveFileFromInputStream(input, savePath, filename +".jpg");
+	    //保存到数据库中的头像路径
+	    String dbpath=ws.getHumanAccount()+GlobalConstants.SEPARATOR+DateUtil.formatDate(new Date(), DateUtil.MM_DD_YYYY)+GlobalConstants.SEPARATOR+filename;
+	    //调用put方法上传
+	    upload.put(savePath+GlobalConstants.SEPARATOR+filename+".jpg",dbpath, auth.uploadToken(GlobalConstants.BUCKET_NAME));
+	    FileDirectoryCopyUtil.del(GlobalConstants.IMAGE_TEMP_LINUX);					         
+	    ws.setHumanPicUrl(GlobalConstants.DB_IMAGE_FILE+GlobalConstants.SEPARATOR+dbpath);
+	    humanService.updateHuman(ws);
+		rmap.put("humanId", ws.getHumanId()+"");
+		if(ws.getHumanPicUrl()!=null&&ws.getHumanPicUrl().trim().length()>0){
+			result.setCode(Constants.SUCCESS);
+			result.setValue(Constants.MSG_GET_SUCCESS);
+			result.setObjValue(ws);
+		}else{
+			rmap.put("humanPicUrl", "");
+			result.setCode(Constants.ERROR);
+			result.setResult(false);
+		}
 		log.info("---leaving---method---ApiController---uploadHumanPic---picupload()---");
 		return result;
-		}
-		
+	}
 }

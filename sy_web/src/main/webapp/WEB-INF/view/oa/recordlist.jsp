@@ -25,9 +25,9 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${pageContext.request.contextPath}/oa/precreaterecord?cid=${cId}" target="dialog" title="添加临时工" width="650" height="400" ><span>添加</span></a></li>
+			<li><a class="add" href="${pageContext.request.contextPath}/oa/precreaterecord?cid=${cId}" target="dialog" title="添加临时工信息" width="650" height="400" ><span>添加</span></a></li>
 			<li><a class="delete" href="${pageContext.request.contextPath}/oa/{sid_user}/deleteRecord" target="ajaxTodo" title="确认删除吗?" rel="page2"><span>删除</span></a></li>
-			<li><a class="edit" href="${pageContext.request.contextPath}/oa/findRecordById/{sid_user}" target="dialog" title="修改临时工" width="650" height="400" ><span>修改</span></a></li>
+			<li><a class="edit" href="${pageContext.request.contextPath}/oa/findRecordById/{sid_user}" target="dialog" title="修改临时工信息" width="650" height="400" ><span>修改</span></a></li>
 			<li class="line">line</li>
 		</ul>
 	</div>

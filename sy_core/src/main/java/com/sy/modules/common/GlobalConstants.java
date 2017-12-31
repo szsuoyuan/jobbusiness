@@ -20,4 +20,6 @@ public class GlobalConstants {
 	//服务端临时根目录
 	public static final String IMAGE_TEMP="/imagetemp";
 	
+	public static final String IMAGE_TEMP_LINUX="/www/server/tomcat/webapps/sy_web/imagetemp";
+	
 }

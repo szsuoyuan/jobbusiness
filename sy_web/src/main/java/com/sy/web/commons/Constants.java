@@ -74,6 +74,7 @@ public class Constants {
 	public static final String MSG_DOWN_SUCCESS = "下架成功!";
 	public static final String MSG_SALES_SUCCESS = "商品变为促销状态";
 	public static final String MSG_NORMAL_SUCCESS = "商品恢复正常状态";
+	public static final String MSG_HUMAN_EXIST = "用户不存在!";
 
 	// -----------------------------------------sss---------------------------------------------------------
 	public static final String MSG_LOAD_SUCCESS = "上传成功";
