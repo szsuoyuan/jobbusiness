@@ -4,65 +4,32 @@
 	<form method="post" action="${pageContext.request.contextPath}/oa/saveLinkman" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
 		<input type="hidden" name="lmId" value="${lmId }" />
-			<p>
-				<label>岗位名称：</label>
-				<input name="lmName" class="required" type="text" size="30"/>
-			</p>
-			<p>
-				<label>岗位月薪：</label>
-				<input  type="text" size="30"  class="required" name="lmPhone3"/>
-			</p>
-			<p>
-				<label>岗位地址：</label>
-				
-				<input name="lmMobile"  type="text" size="30" />
-			</p>
-			<p>
-				<label>返费：</label>
-				<input type="text" size="30" name="lmPhone1" />
-			</p>
-			<p>
-				<label>补贴：</label>
-				<input type="text" size="30"  name="lmPhone2" />
-			</p>
+			<dl class="nowrap">
+					<dt>岗位名称：</dt>
+					<dd><textarea name="lmName" class="required" cols="60" rows="1"></textarea></dd>
+			</dl>
 			
-			<p>
-				<label>工作内容：</label>
-				<input  type="text" size="30"   name="lmPhone4"/>
-			</p>
-			<p>
-				<label>工作环境：</label>
-				<input  type="text" size="30"  name="lmEmail"/>
-			</p>
-			<p>
-				<label>工作时间：</label>
-				<input type="text" size="30" name="lmPost" />
-			</p>
-			
-			<p>
-				<label>工作提示：</label>
-				<input   type="text" size="30"  name="lmQq"/>
-			</p>
+			<dl class="nowrap">
+					<dt>工作内容：</dt>
+					<dd><textarea name="lmPhone4" cols="60" rows="1"></textarea></dd>
+			</dl>
+			<dl class="nowrap">
+					<dt>工作环境：</dt>
+					<dd><textarea name="lmEmail" cols="60" rows="1"></textarea></dd>
+			</dl>
+			<dl class="nowrap">
+					<dt>工作时间：</dt>
+					<dd><textarea name="lmPost" cols="60" rows="1"></textarea></dd>
+			</dl>
+			<dl class="nowrap">
+					<dt>工作提示：</dt>
+					<dd><textarea name="lmQq" cols="60" rows="1"></textarea></dd>
+			</dl>
 			<div class="divider"></div>
-					<dl class="nowrap">
+			<dl class="nowrap">
 					<dt>岗位备注：</dt>
 					<dd><textarea name="lmPhone6" cols="60" rows="6"></textarea></dd>
-				</dl>
-			<%-- 
-				<p>
-					<label>微信：</label>
-					<input type="text" size="30" name="lmWechat"/>
-				</p>
-				<p>
-					<label>职务：</label>
-					<input type="text" size="30" name="lmPost" />
-				</p>
-				<div class="divider"></div>
-					<dl class="nowrap">
-					<dt>联系人简介：</dt>
-					<dd><textarea name="lmPhone6" cols="60" rows="6"></textarea></dd>
-				</dl>
-			--%>
+			</dl>
 		</div>
 		<div class="formBar">
 			<ul>

@@ -35,10 +35,8 @@
 		<thead>
 			<tr>
 				<th width="10%">岗位名称</th>
-				<th width="10%">岗位月薪</th>
-				<th width="10%">岗位地址</th>
-				<th width="10%">饭费</th>
-				<th width="10%">补贴</th>
+				<th width="15%">工作内容</th>
+				<th width="15%">工作时间</th>
 				<th width="10%">创建时间</th>
 				<th width="10%">修改时间</th>
 			</tr>
@@ -47,10 +45,17 @@
 			<c:forEach items="${linkmanlist.list}" var="lkm">
 					<tr target="sid_user" rel="${lkm['lmId'] }">
 						<td>${lkm['lmName'] }</td>
-						<td>${lkm['lmPhone3'] }</td>
-						<td>${lkm['lmMobile'] }</td>
-						<td>${lkm['lmPhone1'] }</td>
-						<td>${lkm['lmPhone2'] }</td>
+						<td>
+							<c:choose>
+	    						<c:when test="${fn:length(lkm.lmPhone4) > 15}">
+	     							<c:out value="${fn:substring(lkm.lmPhone4, 0, 15)}......" />
+	   							</c:when>
+	    						<c:otherwise>
+	     							<c:out value="${lkm.lmPhone4}" />
+	    						</c:otherwise>
+   							</c:choose>
+						</td>
+						<td>${lkm['lmPost'] }</td>
 						<td><fmt:formatDate value="${lkm['createTime']}" pattern="yyyy-MM-dd HH:mm"/></td>
 						<td><fmt:formatDate value="${lkm['updateTime']}" pattern="yyyy-MM-dd HH:mm"/></td>
 					</tr>

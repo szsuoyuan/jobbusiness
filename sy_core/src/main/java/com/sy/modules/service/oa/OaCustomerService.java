@@ -3,19 +3,26 @@ package com.sy.modules.service.oa;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.github.pagehelper.PageInfo;
 import com.sy.modules.common.Constants;
 import com.sy.modules.dao.oa.OaCustomerMapper;
+import com.sy.modules.dao.ws.WsPictureDao;
 import com.sy.modules.entity.oa.OaCustomer;
 import com.sy.modules.entity.vo.oa.OaCustomerVo;
+import com.sy.modules.entity.ws.WsMtPicture;
 
 @Service
 public class OaCustomerService {
 
 	@Autowired
 	private OaCustomerMapper customermapper;
+	
+	@Autowired
+	private WsPictureDao picturedao;
 
 	// find all customers by page
 	public PageInfo<OaCustomer> findAllCustomersByPage(OaCustomerVo customerVo) {
@@ -42,6 +49,13 @@ public class OaCustomerService {
 		custom.setCreateTime(new Date());
 		custom.setUpdateTime(new Date());
 		int num = customermapper.insertSelective(custom);
+		//创建图片
+		if(null!=custom.getPictures()){
+			for(WsMtPicture picture:custom.getPictures()){
+				picture.setId(custom.getcId());
+				picturedao.create(picture);
+			}
+		}
 		return num;
 	}
 

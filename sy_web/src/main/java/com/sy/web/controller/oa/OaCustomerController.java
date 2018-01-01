@@ -1,6 +1,10 @@
 package com.sy.web.controller.oa;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.github.pagehelper.PageInfo;
 import com.sy.modules.entity.oa.OaCustomer;
 import com.sy.modules.entity.sys.SysUser;
 import com.sy.modules.entity.vo.oa.OaCustomerVo;
+import com.sy.modules.entity.ws.WsMtPicture;
 import com.sy.modules.service.oa.OaCustomerService;
 import com.sy.web.commons.Constants;
 import com.sy.web.commons.JsonUtil;
@@ -64,6 +70,25 @@ public class OaCustomerController {
 	public String saveCustomer(Model model, HttpServletRequest request,@ModelAttribute OaCustomer customer) {
 		int flag = -1;
 		SysUser user = SessionUtil.getLoginUser(request);
+		String[] fileNames = request.getParameterValues("filename");
+		List<WsMtPicture> picList = new ArrayList<WsMtPicture>();
+		// 加载所有图片
+		if (fileNames != null) {
+			for (String filename : fileNames) {
+				if (filename != null &&filename.trim().length()>0) {
+					String fileurl=filename;
+					// 拆分图文封面路径，存DB
+					//int dex = filename.indexOf(Constants.APPIMAGES);
+					//String fileurl = filename.substring(dex+ Constants.APPIMAGES.length());
+					WsMtPicture f = new WsMtPicture();
+					f.setPictureUrl(fileurl);
+					f.setPictureName(fileurl);
+					//customer.setPropicpath(fileurl);
+					picList.add(f);
+				}
+			}
+			customer.setPictures(picList);
+		}
 		if (null != customer) {
 			if (StringUtils.isNotBlank(user.getUsername())) {
 				customer.setSysUserId(user.getId());

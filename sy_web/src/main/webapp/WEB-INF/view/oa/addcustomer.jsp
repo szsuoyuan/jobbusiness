@@ -34,28 +34,29 @@
 			</fieldset>
 			<fieldset>
 				<legend>住宿信息</legend>
-			<p>
-				<label>位置：</label>
-				<input type="text" size="30" name="cWeibo"/>
-			</p>
-			<p>
-				<label>环境：</label>
-				<input type="text" size="30" name="cAddress"/>
-			</p>
-			<p>
-				<label>费用：</label>
-				<input type="text" size="30" name="cSite" />
-			</p>
-			<p>
-				<label>厂车：</label>
-				<input type="text" size="30" name="cHotel" />
-			</p>
-			<p>
-				<label>提示：</label>
-				<input type="text" size="30" name="cWechat" />
-			</p>
+				<dl class="nowrap">
+					<dt>位置：</dt>
+					<dd><textarea name="cWeibo" cols="60" rows="1"></textarea></dd>
+				</dl>
+				
+				<dl class="nowrap">
+					<dt>环境：</dt>
+					<dd><textarea name="cAddress" cols="60" rows="1"></textarea></dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>费用：</dt>
+					<dd><textarea name="cSite" cols="60" rows="1"></textarea></dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>厂车：</dt>
+					<dd><textarea name="cHotel" cols="60" rows="1"></textarea></dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>提示：</dt>
+					<dd><textarea name="cWechat" cols="60" rows="1"></textarea></dd>
+				</dl>
 			</fieldset>
-			<fieldset style="margin-top: 10px;" id="cptp">
+			<fieldset style="margin-top: 10px;" id="cptp1">
 				<legend>住宿图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
 				<div class="image-container">
 					<!-- 显示图片 -->
@@ -63,14 +64,14 @@
 			</fieldset>
 			<fieldset>
 				<legend>伙食信息</legend>
-			<p>
-				<label>费用：</label>
-				<input type="text" size="30" name="cQq"/>
-			</p>
-			<p>
-				<label>提示：</label>
-				<input type="text" size="30" name="cTrde"/>
-			</p>
+				<dl class="nowrap">
+					<dt>费用：</dt>
+					<dd><textarea name="cQq" cols="60" rows="1"></textarea></dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>提示：</dt>
+					<dd><textarea name="cTrde" cols="60" rows="1"></textarea></dd>
+				</dl>
 			</fieldset>
 			<fieldset style="margin-top: 10px;" id="cptp">
 				<legend>伙食图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
