@@ -95,8 +95,8 @@ public class ApiWsHumanController extends PageSet {
 		String smaccount = request.getParameter("humanAccount");
 		String smpass = request.getParameter("humanPassword");
 		try{
-			if(StringUtils.isNotBlank(smaccount)&&StringUtils.isNotBlank(smpass)&&StringUtils.isNotBlank(loginStatus)){
-				if(loginStatus.equals(1)){
+			if(StringUtils.isNotBlank(smaccount)&& StringUtils.isNotBlank(loginStatus)){
+				if(1==Integer.parseInt(loginStatus)){
 					WsHuman human=humanService.findByAccount(smaccount);
 					if(null == human){
 						WsHuman wshuman =new WsHuman();
@@ -105,9 +105,9 @@ public class ApiWsHumanController extends PageSet {
 					}
 					result.setCode(Constants.SUCCESS);
 					result.setValue(Constants.MSG_LOGIN_SUCCESS);
-					result.setObjValue(human);
+					result.setObjValue(humanService.findByAccount(smaccount));
 				}
-				if(loginStatus.equals(2)){
+				if(2==Integer.parseInt(loginStatus)&& StringUtils.isNotBlank(smpass)){
 					WsHuman human=humanService.humanLogin(smaccount, smpass);
 					result.setCode(Constants.SUCCESS);
 					result.setValue(Constants.MSG_LOGIN_SUCCESS);

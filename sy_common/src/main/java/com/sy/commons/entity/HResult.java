@@ -52,9 +52,6 @@ public class HResult<T> {
 		this.paramMap = paramMap;
 	}
 
-	public Boolean isOK() {
-		return result;
-	}
 
 	public String getValue() {
 		return value;
