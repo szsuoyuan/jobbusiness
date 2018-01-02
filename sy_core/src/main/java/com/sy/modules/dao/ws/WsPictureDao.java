@@ -13,9 +13,9 @@ import com.sy.modules.entity.ws.WsMtPicture;
 @MyBatisRepository
 public interface WsPictureDao extends ParentDao<WsMtPicture,Long> {
 	//注册图片和企业关系 
-	void create_user_pic(UserPic obj);
+	//void create_user_pic(UserPic obj);
 	//根据user_id查找单张图片
-	WsMtPicture findByUserId(Long id);
+	//WsMtPicture findByUserId(Long id);
 	
-	public void createIcon(Map<String,Object> map);
+	//public void createIcon(Map<String,Object> map);
 }

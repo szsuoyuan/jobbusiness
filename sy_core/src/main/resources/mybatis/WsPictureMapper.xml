@@ -8,12 +8,15 @@
 		<result column="picture_name" property="pictureName" />
 		<result column="picture_type" property="pictureType" />
 		<result column="del_status" property="delStatus" />
+		<result column="create_name" property="createName" />
+		<result column="create_time" property="createTime" />
 	</resultMap>
 	<!-- 添加图片 -->
-	<insert id="create" parameterType="WsMtPicture" keyProperty="id"useGeneratedKeys="true">
+	<insert id="create" parameterType="WsMtPicture" keyProperty="id" useGeneratedKeys="true">
 		insert into ws_picture(c_id,picture_url,picture_name,create_name,create_time)
 		values(#{cId},#{pictureUrl},#{pictureName},#{createName},#{createTime});
 	</insert>
+	
 	<!-- 创建账号与ICon关联 -->
 	<insert id="createIcon" parameterType="Map">
 		insert into
@@ -21,7 +24,7 @@
 	</insert>
 	<!-- 删除单这张图片 -->
 	<delete id="deleteById" parameterType="int">
-		delete from ws_picture where picture_id = #{picture_id};
+		delete from ws_picture where picture_id = #{id};
 	</delete>
 	<!-- 根据id查找单张图片 -->
 	<select id="findById" parameterType="Long" resultMap="pictureResult">
@@ -37,4 +40,5 @@
 	<select id="update" parameterType="WsMtPicture">
 		update ws_picture set picture_url=#{pictureUrl} where picture_id = #{id};
 	</select>
+	
 </mapper>

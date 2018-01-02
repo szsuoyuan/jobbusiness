@@ -147,7 +147,7 @@
 			$(".image-container").append(
 					"<div class='image-item'>"+
 						"<span style='width: 200px;height: 200px;border: 1px #C4C4C4 solid; display: block; float: left; margin: 5px;'>"+
-						"<input type='file' name='uploadPic' class='filePrew' id='uploadPic' fileFormat='GIF,JPG,JPEG,PNG,BMP' style='width: 65px;height: 27px; margin-left: 20px;'>"+
+						"<input type='file' name='uploadPic' class='filePrew' id='uploadPic' fileFormat='GIF,JPG,JPEG,PNG,BMP'  style='width: 65px;height: 27px; margin-left: 20px;'>"+
 						"<input type='button' value='删除' style='margin-left: 20px;width:65px;' onclick='removePic(this)'>"+
 						"<span style='width: 90%;height: 1px;display: block;border-top:1px dotted #C7C7C7; margin:auto;'></span>"+
 						"<span style='width:100%;height: 175px; display: block;'><img src='images/fm.png' class='img-rounded' style='width: 100%;height: 97%'/></span>"+
