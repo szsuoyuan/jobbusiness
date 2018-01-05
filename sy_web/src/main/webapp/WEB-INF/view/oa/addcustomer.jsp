@@ -101,7 +101,6 @@
 				</dl>
 			</fieldset>
 		</div>
-		<input type="text" id="filename" name="filename" value="${filename}">
 		<div class="formBar">
 			<ul style="float: left;margin-left: 5px;">
 				<li>
@@ -188,6 +187,7 @@ function uploadingImgageText(th) {
 	/* 验证是否是有效图片格式 */
 	/* 上传图片 */
 	var thisid = $(th).attr("id");
+	alert(thisid);
 	$.ajaxFileUpload({
 				url : "picupload?width=0&height=0",
 				secureuri : false,
@@ -208,9 +208,9 @@ function uploadingImgageText(th) {
 						alert("上传失败！");
 					else if (data.updateP == thisid) {
 						/* 增加img标签将图片显示出来 */
-						$("#" + thisid).next().next().next().next().html("<img src='"+data.fileName+"' width='200px' height='170px'>");
+						$("#" + thisid).next().next().next().html("<img src='"+data.fileName+"' width='200px' height='170px'>");
 						/*真正保存图片的地方*/
-						$("#" + thisid).after("<input type='hidden' id='imageText' name='imageText' value='"+data.dbpath+"'>");
+						$("#" + thisid).after("<input type='hidden' id='filename' name='filename' value='"+data.fileName+"'>");
 						/* 上传完后不允许修改 */
 						$("#" + thisid).attr("disabled", true);
 					}

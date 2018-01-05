@@ -52,7 +52,7 @@ public class OaCustomerService {
 		//创建图片
 		if(null!=custom.getPictures()){
 			for(WsMtPicture picture:custom.getPictures()){
-				picture.setId(custom.getcId());
+				picture.setcId(custom.getcId().intValue());
 				picturedao.create(picture);
 			}
 		}

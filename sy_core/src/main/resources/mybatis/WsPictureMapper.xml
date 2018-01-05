@@ -41,4 +41,11 @@
 		update ws_picture set picture_url=#{pictureUrl} where picture_id = #{id};
 	</select>
 	
+	<select id="findAllWsMtPicturesByCId" parameterType="java.lang.Integer" resultMap="pictureResult">
+		SELECT wp.*
+		FROM ws_picture AS wp  LEFT JOIN  oa_customer AS oc  ON wp.c_id=oc.c_id
+		WHERE wp.c_id=#{cId}
+	</select>
+	
+	
 </mapper>
