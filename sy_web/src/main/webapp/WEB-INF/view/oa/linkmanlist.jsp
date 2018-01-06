@@ -35,6 +35,7 @@
 		<thead>
 			<tr>
 				<th width="10%">岗位名称</th>
+				<th width="10%">岗位月薪</th>
 				<th width="15%">工作内容</th>
 				<th width="15%">工作时间</th>
 				<th width="10%">创建时间</th>
@@ -45,6 +46,7 @@
 			<c:forEach items="${linkmanlist.list}" var="lkm">
 					<tr target="sid_user" rel="${lkm['lmId'] }">
 						<td>${lkm['lmName'] }</td>
+						<td>${lkm['lmPhone3'] }</td>
 						<td>
 							<c:choose>
 	    						<c:when test="${fn:length(lkm.lmPhone4) > 15}">

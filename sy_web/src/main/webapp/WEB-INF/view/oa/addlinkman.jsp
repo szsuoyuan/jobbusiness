@@ -8,7 +8,10 @@
 					<dt>岗位名称：</dt>
 					<dd><textarea name="lmName" class="required" cols="60" rows="1"></textarea></dd>
 			</dl>
-			
+			<dl class="nowrap">
+					<dt>岗位月薪：</dt>
+					<dd><input name="lmPhone3" class="required" type="text" size="61"/></textarea></dd>
+			</dl>
 			<dl class="nowrap">
 					<dt>工作内容：</dt>
 					<dd><textarea name="lmPhone4" cols="60" rows="1"></textarea></dd>

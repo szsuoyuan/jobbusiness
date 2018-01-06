@@ -21,6 +21,7 @@ import com.sy.modules.entity.sys.SysUser;
 import com.sy.modules.entity.vo.oa.OaCustomerVo;
 import com.sy.modules.entity.ws.WsMtPicture;
 import com.sy.modules.service.oa.OaCustomerService;
+import com.sy.modules.service.ws.WsMtPictureService;
 import com.sy.web.commons.Constants;
 import com.sy.web.commons.JsonUtil;
 import com.sy.web.commons.SessionUtil;
@@ -31,6 +32,9 @@ public class OaCustomerController {
 
 	@Autowired
 	private OaCustomerService customerservice;
+	
+	@Autowired
+	private WsMtPictureService pictureservice;
 
 	// find all customers by page
 	@RequestMapping(value = "/findAllCustomersByPage", method = {RequestMethod.GET, RequestMethod.POST })
@@ -70,10 +74,28 @@ public class OaCustomerController {
 	public String saveCustomer(Model model, HttpServletRequest request,@ModelAttribute OaCustomer customer) {
 		int flag = -1;
 		SysUser user = SessionUtil.getLoginUser(request);
+		
+		String[] jobimages = request.getParameterValues("jobimage");
+		List<WsMtPicture> jobimageList = new ArrayList<WsMtPicture>();
+		if (null != jobimages) {
+			for (String filename : jobimages) {
+				if (filename != null &&filename.trim().length()>0) {
+					String fileurl=filename;
+					// 拆分图文封面路径，存DB
+					WsMtPicture f = new WsMtPicture();
+					f.setPictureUrl(fileurl);
+					f.setPictureName(fileurl);
+					f.setPictureType("job");
+					jobimageList.add(f);
+				}
+			}
+			customer.setJobpictures(jobimageList);
+		}
+		
 		String[] fileNames = request.getParameterValues("filename");
 		List<WsMtPicture> picList = new ArrayList<WsMtPicture>();
 		// 加载所有图片
-		if (fileNames != null) {
+		if (null != fileNames) {
 			for (String filename : fileNames) {
 				if (filename != null &&filename.trim().length()>0) {
 					String fileurl=filename;
@@ -83,12 +105,31 @@ public class OaCustomerController {
 					WsMtPicture f = new WsMtPicture();
 					f.setPictureUrl(fileurl);
 					f.setPictureName(fileurl);
-					//customer.setPropicpath(fileurl);
+					f.setPictureType("zs");
 					picList.add(f);
 				}
 			}
 			customer.setPictures(picList);
 		}
+		
+		String[] foodimages = request.getParameterValues("foodimage");
+		List<WsMtPicture> foodimageList= new ArrayList<WsMtPicture>();
+		if (null != foodimages) {
+			for (String filename : foodimages) {
+				if (filename != null &&filename.trim().length()>0) {
+					String fileurl=filename;
+					// 拆分图文封面路径，存DB
+					WsMtPicture f = new WsMtPicture();
+					f.setPictureUrl(fileurl);
+					f.setPictureName(fileurl);
+					f.setPictureType("hs");
+					foodimageList.add(f);
+				}
+			}
+			customer.setHspictures(foodimageList);
+		}
+		
+		
 		if (null != customer) {
 			if (StringUtils.isNotBlank(user.getUsername())) {
 				customer.setSysUserId(user.getId());
@@ -142,6 +183,13 @@ public class OaCustomerController {
 	public String findCustomerById(@PathVariable("cid") Integer cid,Model model, HttpServletRequest request) {
 		if (null != cid) {
 			OaCustomer customer = customerservice.findCustomer(cid);
+			//查询图片信息
+			List<WsMtPicture> jobimagelist= pictureservice.findAllPictureListManager(cid,"job");
+			List<WsMtPicture> zsimagelist= pictureservice.findAllPictureListManager(cid,"zs");
+			List<WsMtPicture> hsimagelist= pictureservice.findAllPictureListManager(cid,"hs");
+			model.addAttribute("jobpiclist",jobimagelist);
+			model.addAttribute("zsimagelist",zsimagelist);
+			model.addAttribute("hsimagelist",hsimagelist);
 			model.addAttribute("customer", customer);
 		}
 		return "oa/preupdcustomer";
@@ -153,6 +201,62 @@ public class OaCustomerController {
 	public String saveEmployeeByUpd(Model model,@ModelAttribute OaCustomer customer, HttpServletRequest request) {
 		int flag = -1;
 		if (null != customer) {
+			
+			String[] jobimages = request.getParameterValues("jobimage");
+			List<WsMtPicture> jobimageList = new ArrayList<WsMtPicture>();
+			// 加载所有图片
+			if (null != jobimages) {
+				for (String filename : jobimages) {
+					if (filename != null &&filename.trim().length()>0) {
+						String fileurl=filename;
+						// 拆分图文封面路径，存DB
+						WsMtPicture f = new WsMtPicture();
+						f.setPictureUrl(fileurl);
+						f.setPictureName(fileurl);
+						f.setPictureType("job");
+						jobimageList.add(f);
+					}
+				}
+				customer.setJobpictures(jobimageList);
+			}
+			
+			
+			String[] fileNames = request.getParameterValues("filename");
+			List<WsMtPicture> picList = new ArrayList<WsMtPicture>();
+			// 加载所有图片
+			if (null != fileNames) {
+				for (String filename : fileNames) {
+					if (filename != null &&filename.trim().length()>0) {
+						String fileurl=filename;
+						// 拆分图文封面路径，存DB
+						WsMtPicture f = new WsMtPicture();
+						f.setPictureUrl(fileurl);
+						f.setPictureName(fileurl);
+						f.setPictureType("zs");
+						picList.add(f);
+					}
+				}
+				customer.setPictures(picList);
+			}
+			
+			String[] hsimages = request.getParameterValues("foodimage");
+			List<WsMtPicture> hsimageList = new ArrayList<WsMtPicture>();
+			// 加载所有图片
+			if (null != hsimages) {
+				for (String filename : hsimages) {
+					if (filename != null &&filename.trim().length()>0) {
+						String fileurl=filename;
+						// 拆分图文封面路径，存DB
+						WsMtPicture f = new WsMtPicture();
+						f.setPictureUrl(fileurl);
+						f.setPictureName(fileurl);
+						f.setPictureType("hs");
+						hsimageList.add(f);
+					}
+				}
+				customer.setHspictures(hsimageList);
+			}
+			
 			flag = customerservice.updateCustomer(customer);
 		}
 		if (flag > 0) {

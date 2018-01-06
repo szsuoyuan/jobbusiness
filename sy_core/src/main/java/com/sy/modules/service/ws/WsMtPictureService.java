@@ -23,7 +23,7 @@ public class WsMtPictureService extends AbstractService<WsMtPicture,Long,WsPictu
 		return picturedao;
 	}
 	
-	public List<WsMtPicture> findAllPictureListManager(Integer cId){
-		return picturedao.findAllWsMtPicturesByCId(cId);
+	public List<WsMtPicture> findAllPictureListManager(Integer cId,String param){
+		return picturedao.findAllWsMtPicturesByCId(cId,param);
 	}
 }

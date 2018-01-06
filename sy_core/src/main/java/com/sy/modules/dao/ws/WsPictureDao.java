@@ -18,5 +18,7 @@ public interface WsPictureDao extends ParentDao<WsMtPicture,Long> {
 	
 	void createIcon(Map<String,Object> map);
 	
-	List<WsMtPicture> findAllWsMtPicturesByCId(Integer cId);
+	List<WsMtPicture> findAllWsMtPicturesByCId(Integer cId,String param);
+	
+	void deletePictureByCId(Integer cId,String param);
 }

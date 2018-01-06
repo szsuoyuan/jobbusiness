@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageInfo;
 import com.sy.modules.common.Constants;
@@ -16,6 +17,7 @@ import com.sy.modules.entity.vo.oa.OaCustomerVo;
 import com.sy.modules.entity.ws.WsMtPicture;
 
 @Service
+@Transactional
 public class OaCustomerService {
 
 	@Autowired
@@ -49,9 +51,22 @@ public class OaCustomerService {
 		custom.setCreateTime(new Date());
 		custom.setUpdateTime(new Date());
 		int num = customermapper.insertSelective(custom);
+		//岗位图片
+		if(null!=custom.getJobpictures()){
+			for(WsMtPicture picture:custom.getJobpictures()){
+				picture.setcId(custom.getcId().intValue());
+				picturedao.create(picture);
+			}
+		}
 		//创建图片
 		if(null!=custom.getPictures()){
 			for(WsMtPicture picture:custom.getPictures()){
+				picture.setcId(custom.getcId().intValue());
+				picturedao.create(picture);
+			}
+		}
+		if(null!=custom.getHspictures()){
+			for(WsMtPicture picture:custom.getHspictures()){
 				picture.setcId(custom.getcId().intValue());
 				picturedao.create(picture);
 			}
@@ -79,6 +94,27 @@ public class OaCustomerService {
 	public int updateCustomer(OaCustomer custom) {
 		custom.setUpdateTime(new Date());
 		int num = customermapper.updateByPrimaryKeySelective(custom);
+		if(null != custom.getJobpictures()){
+			picturedao.deletePictureByCId(custom.getcId().intValue(),"job");
+			for(WsMtPicture picture:custom.getJobpictures()){
+				picture.setcId(custom.getcId().intValue());
+				picturedao.create(picture);
+			}
+		}
+		if(null!=custom.getPictures()){
+			picturedao.deletePictureByCId(custom.getcId().intValue(),"zs");
+			for(WsMtPicture picture:custom.getPictures()){
+				picture.setcId(custom.getcId().intValue());
+				picturedao.create(picture);
+			}
+		}
+		if(null!=custom.getHspictures()){
+			picturedao.deletePictureByCId(custom.getcId().intValue(),"hs");
+			for(WsMtPicture picture:custom.getHspictures()){
+				picture.setcId(custom.getcId().intValue());
+				picturedao.create(picture);
+			}
+		}
 		return num;
 	}
 	

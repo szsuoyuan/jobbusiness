@@ -13,8 +13,8 @@
 	</resultMap>
 	<!-- 添加图片 -->
 	<insert id="create" parameterType="WsMtPicture" keyProperty="id" useGeneratedKeys="true">
-		insert into ws_picture(c_id,picture_url,picture_name,create_name,create_time)
-		values(#{cId},#{pictureUrl},#{pictureName},#{createName},#{createTime});
+		insert into ws_picture(c_id,picture_url,picture_type,picture_name,create_name,create_time)
+		values(#{cId},#{pictureUrl},#{pictureType},#{pictureName},#{createName},#{createTime});
 	</insert>
 	
 	<!-- 创建账号与ICon关联 -->
@@ -41,11 +41,14 @@
 		update ws_picture set picture_url=#{pictureUrl} where picture_id = #{id};
 	</select>
 	
-	<select id="findAllWsMtPicturesByCId" parameterType="java.lang.Integer" resultMap="pictureResult">
+	<select id="findAllWsMtPicturesByCId"  resultMap="pictureResult">
 		SELECT wp.*
 		FROM ws_picture AS wp  LEFT JOIN  oa_customer AS oc  ON wp.c_id=oc.c_id
-		WHERE wp.c_id=#{cId}
+		WHERE wp.c_id=#{0} and wp.picture_type=#{1}
 	</select>
 	
+	<delete id="deletePictureByCId" >
+		delete from ws_picture where c_id = #{0} and picture_type=#{1}  ;
+	</delete>
 	
 </mapper>
