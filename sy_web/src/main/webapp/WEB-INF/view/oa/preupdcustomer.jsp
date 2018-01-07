@@ -99,26 +99,28 @@
 			</fieldset>
 			<fieldset>
 				<legend>住宿信息</legend>
-			<p>
-				<label>位置：</label>
-				<input type="text" size="30" name="cWeibo" value="${customer['cWeibo'] }" />
-			</p>
-			<p>
-				<label>环境：</label>
-				<input type="text" size="30" name="cAddress" value="${customer['cAddress'] }" />
-			</p>
-			<p>
-				<label>费用：</label>
-				<input type="text" size="30" name="cSite" value="${customer['cSite'] }" />
-			</p>
-			<p>
-				<label>厂车：</label>
-				<input type="text" size="30" name="cHotel" value="${customer['cHotel'] }" />
-			</p>
-			<p>
-				<label>提示：</label>
-				<input type="text" size="30" name="cWechat" value="${customer['cWechat'] }" />
-			</p>
+				<dl class="nowrap">
+					<dt>位置：</dt>
+					<dd><textarea name="cWeibo" cols="60" rows="1">${customer['cWeibo'] }</textarea></dd>
+				</dl>
+				
+				<dl class="nowrap">
+					<dt>环境：</dt>
+					<dd><textarea name="cAddress" cols="60" rows="1">${customer['cAddress'] }</textarea></dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>费用：</dt>
+					<dd><textarea name="cSite" cols="60" rows="1">${customer['cSite'] }</textarea></dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>厂车：</dt>
+					<dd><textarea name="cHotel" cols="60" rows="1">${customer['cHotel'] }</textarea></dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>提示：</dt>
+					<dd><textarea name="cWechat" cols="60" rows="1">${customer['cWechat'] }</textarea></dd>
+				</dl>
+				
 			</fieldset>
 			<fieldset style="margin-top: 10px;" id="cptp">
 				<legend>住宿图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
@@ -141,14 +143,15 @@
 			</fieldset>
 			<fieldset>
 				<legend>伙食信息</legend>
-			<p>
-				<label>费用：</label>
-				<input type="text" size="30" name="cQq" value="${customer['cQq'] }" />
-			</p>
-			<p>
-				<label>提示：</label>
-				<input type="text" size="30" name="cTrde" value="${customer['cTrde'] }" />
-			</p>
+				
+				<dl class="nowrap">
+					<dt>费用：</dt>
+					<dd><textarea name="cQq" cols="60" rows="1">${customer['cQq'] }</textarea></dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>提示：</dt>
+					<dd><textarea name="cTrde" cols="60" rows="1">${customer['cTrde'] }</textarea></dd>
+				</dl>
 			</fieldset>
 			<fieldset style="margin-top: 10px;" id="cptp">
 				<legend>伙食图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>

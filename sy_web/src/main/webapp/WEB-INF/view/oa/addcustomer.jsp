@@ -132,6 +132,31 @@
 					<dd><textarea name="cScale" cols="60" rows="1"></textarea></dd>
 				</dl>
 			</fieldset>
+			<fieldset>
+				<legend>薪资图片</legend>
+				<div class='image-item'>
+								<span style='width: 200px;height: 200px;border: 1px #C4C4C4 solid; display: block; float: left; margin: 5px;'>
+								<input type='file' name='uploadPic50' class='filePrew' id='uploadPic50' fileFormat='GIF,JPG,JPEG,PNG,BMP' onchange='uploadingSalaryImage(this)'  style='width: 65px;height: 27px; margin-left: 20px;'>
+								<span style='width: 90%;height: 1px;display: block;border-top:1px dotted #C7C7C7; margin:auto;'></span>
+								<span style='width:100%;height: 175px; display: block;'><img src='images/fm.png' class='img-rounded' style='width: 100%;height: 97%'/></span>
+								</span>
+					</div>
+					<div class='image-item'>
+								<span style='width: 200px;height: 200px;border: 1px #C4C4C4 solid; display: block; float: left; margin: 5px;'>
+								<input type='file' name='uploadPic51' class='filePrew' id='uploadPic51' fileFormat='GIF,JPG,JPEG,PNG,BMP' onchange='uploadingSalaryImage(this)'  style='width: 65px;height: 27px; margin-left: 20px;'>
+								<span style='width: 90%;height: 1px;display: block;border-top:1px dotted #C7C7C7; margin:auto;'></span>
+								<span style='width:100%;height: 175px; display: block;'><img src='images/fm.png' class='img-rounded' style='width: 100%;height: 97%'/></span>
+								</span>
+					</div>
+					<div class='image-item'>
+								<span style='width: 200px;height: 200px;border: 1px #C4C4C4 solid; display: block; float: left; margin: 5px;'>
+								<input type='file' name='uploadPic52' class='filePrew' id='uploadPic52' fileFormat='GIF,JPG,JPEG,PNG,BMP' onchange='uploadingSalaryImage(this)'  style='width: 65px;height: 27px; margin-left: 20px;'>
+								<span style='width: 90%;height: 1px;display: block;border-top:1px dotted #C7C7C7; margin:auto;'></span>
+								<span style='width:100%;height: 175px; display: block;'><img src='images/fm.png' class='img-rounded' style='width: 100%;height: 97%'/></span>
+								</span>
+					</div>
+			</fieldset>
+			
 			<div class="divider"></div>
 			<fieldset>
 				<legend>公司简介</legend>
@@ -401,6 +426,49 @@ function uploadingImgageText(th) {
 				}
 			});
 }
+
+
+
+//薪资图片
+function uploadingSalaryImage(th) {
+	/* 验证是否是有效图片格式 */
+	/* 上传图片 */
+	var thisid = $(th).attr("id");
+	alert(thisid);
+	$.ajaxFileUpload({
+				url : "picupload?width=0&height=0",
+				secureuri : false,
+				fileElementId : thisid, //文件选择框的id属性（必须）
+				dataType : 'text',
+				data : {
+					"updateP" : thisid
+				},
+				success : function(data, status) {
+					var data = eval("(" + data + ")");
+					if (data.state == 1)
+						alert("图片格式不符，支持bmp、jgp、png、gif格式");
+					else if (data.state == 2)
+						alert("图片大小超过100K");
+					else if (data.state == 3)
+						alert("图片宽高不符合要求");
+					else if (data.state == 4)
+						alert("上传失败！");
+					else if (data.updateP == thisid) {
+						/* 增加img标签将图片显示出来 */
+						$("#" + thisid).next().next().next().html("<img src='"+data.fileName+"' width='200px' height='170px'>");
+						/*真正保存图片的地方*/
+						$("#" + thisid).after("<input type='hidden' id='salaryimage' name='salaryimage' value='"+data.fileName+"'>");
+						/* 上传完后不允许修改 */
+						$("#" + thisid).attr("disabled", true);
+					}
+				},
+				error : function() {
+					alert("预览失败！");
+				}
+			});
+}
+
+
 
 </script>
 

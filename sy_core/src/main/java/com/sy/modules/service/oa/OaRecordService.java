@@ -52,5 +52,10 @@ public class OaRecordService {
 		int num = recordmapper.updateByPrimaryKeySelective(record);
 		return num;
 	}
+	
+	//find record by cId
+	public OaRecord findRecordByCId(Integer cId) {
+		return recordmapper.selectByPrimaryKeyAndCId(cId.longValue());
+	}
 
 }

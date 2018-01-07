@@ -455,6 +455,66 @@ public class WsOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andOCompanyIdIsNull() {
+            addCriterion("o_company_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdIsNotNull() {
+            addCriterion("o_company_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdEqualTo(Integer value) {
+            addCriterion("o_company_id =", value, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdNotEqualTo(Integer value) {
+            addCriterion("o_company_id <>", value, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdGreaterThan(Integer value) {
+            addCriterion("o_company_id >", value, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("o_company_id >=", value, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdLessThan(Integer value) {
+            addCriterion("o_company_id <", value, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdLessThanOrEqualTo(Integer value) {
+            addCriterion("o_company_id <=", value, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdIn(List<Integer> values) {
+            addCriterion("o_company_id in", values, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdNotIn(List<Integer> values) {
+            addCriterion("o_company_id not in", values, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdBetween(Integer value1, Integer value2) {
+            addCriterion("o_company_id between", value1, value2, "oCompanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOCompanyIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("o_company_id not between", value1, value2, "oCompanyId");
+            return (Criteria) this;
+        }
+
         public Criteria andOCompanyIsNull() {
             addCriterion("o_company is null");
             return (Criteria) this;
