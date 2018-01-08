@@ -38,10 +38,10 @@ public class OaCustomerService {
 			customerVo.setSeaStatus(Constants.ISDELSTATE);
 			list = customermapper.selectByExample(customerVo.toExample());
 			for(OaCustomer cus:list){
-				//OaRecord record=recordmapper.selectByPrimaryKeyAndCId(cus.getcId());
-				//cus.setRecord(record);
-				List<OaRecord> recordList =recordmapper.selectAllRecordListByCId(cus.getcId());
-				cus.setRecordList(recordList);
+				OaRecord record=recordmapper.selectByPrimaryKeyAndCId(cus.getcId());
+				cus.setRecord(record);
+				//List<OaRecord> recordList =recordmapper.selectAllRecordListByCId(cus.getcId());
+				//cus.setRecordList(recordList);
 			}
 		}
 		return new PageInfo<OaCustomer>(list);

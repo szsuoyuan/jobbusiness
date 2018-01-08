@@ -130,7 +130,7 @@
 						<c:forEach items="${zsimagelist}" var="pic" varStatus="index">
 							<div class='image-item'>
 								<span style='width: 200px;height: 200px;border: 1px #C4C4C4 solid; display: block; float: left; margin: 5px;'>
-								<input type='file' name='uploadPic${index.count}2' class='filePrew' id='uploadPic${index.count}2' fileFormat='GIF,JPG,JPEG,PNG,BMP' onchange='uploadingImgageTextForUpd(this)'  style='width: 65px;height: 27px; margin-left: 20px;'>
+								<input type='file' name='uploadPic${index.count}3' class='filePrew' id='uploadPic${index.count}3' fileFormat='GIF,JPG,JPEG,PNG,BMP' onchange='uploadingImgageTextForUpd(this)'  style='width: 65px;height: 27px; margin-left: 20px;'>
 								<input type='button' value='删除' style='margin-left: 20px;width:65px;' onclick='removePic(this)'>
 								<span style='width: 90%;height: 1px;display: block;border-top:1px dotted #C7C7C7; margin:auto;'><input type='hidden' id='filename' name='filename' value='${pic.pictureUrl }'></span>
 								<span style='width:100%;height: 175px; display: block;'><img src='${pic.pictureUrl }' class='img-rounded' style='width: 100%;height: 97%'/></span>
