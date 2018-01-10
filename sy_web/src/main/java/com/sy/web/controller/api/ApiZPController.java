@@ -50,10 +50,17 @@ public class ApiZPController extends PageSet {
 	//今日招工列表
 	@RequestMapping(value = "/searchCompanyAndJobInfo")
 	@ResponseBody
-	public HResult<PageInfo<OaCustomer>> searchCompanyAndJobInfo(HttpServletRequest request,Model model,@ModelAttribute OaCustomerVo customVo){
+	public HResult<PageInfo<OaCustomer>> searchCompanyAndJobInfo(HttpServletRequest request,Model model,@ModelAttribute OaCustomerVo customVo,
+			@RequestParam(value="jobType") Integer jobType){
 		log.info("---entering---method---searchCompanyAndJobInfo()---");
 		HResult<PageInfo<OaCustomer>> result = new HResult<>(true, "");
-		PageInfo<OaCustomer> customlist = customerService.findAllCustomersByPage(customVo);
+		PageInfo<OaCustomer> customlist=null;
+		if(null !=jobType && jobType==1){
+			 customlist = customerService.findAllCustomersByPage(customVo);
+		}
+		if(null !=jobType && jobType==2){
+			 customlist = customerService.findAllLSCustomersByPage(customVo);
+		}
 		result.setCode(Constants.SUCCESS);
 		result.setValue(Constants.MSG_GET_SUCCESS);
 		result.setObjValue(customlist);

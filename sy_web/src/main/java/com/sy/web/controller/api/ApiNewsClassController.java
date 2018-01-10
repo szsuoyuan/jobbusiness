@@ -3,6 +3,8 @@ package com.sy.web.controller.api;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.sy.modules.entity.ws.WsNews;
 import com.sy.modules.entity.ws.WsNewsClass;
 import com.sy.modules.service.ws.WsNewsClassService;
 import com.sy.modules.service.ws.WsNewsService;
+import com.sy.modules.utils.HtmlUtil;
 import com.sy.web.commons.Constants;
 import com.sy.web.commons.DataTool;
 import com.sy.web.commons.PageSet;
@@ -73,6 +76,9 @@ public class ApiNewsClassController extends PageSet {
 		log.info("-----entering---method---ApiNewsClassController---searchNewsDetailById-----");
 		HResult<WsNews> result = new HResult<>(true, "");
 		WsNews newsdetail=newservice.findById(nId.longValue());
+		if(null != newsdetail.getNewsContent()){
+			newsdetail.setNewsContent(HtmlUtil.delHTMLTag(newsdetail.getNewsContent()));
+		}
 		result.setCode(Constants.SUCCESS);
 		result.setObjValue(newsdetail);
 		result.setValue(Constants.MSG_GET_SUCCESS);

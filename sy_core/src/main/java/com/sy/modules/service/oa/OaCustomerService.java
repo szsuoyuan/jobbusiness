@@ -11,10 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageInfo;
 import com.sy.modules.common.Constants;
 import com.sy.modules.dao.oa.OaCustomerMapper;
-import com.sy.modules.dao.oa.OaRecordMapper;
 import com.sy.modules.dao.ws.WsPictureDao;
 import com.sy.modules.entity.oa.OaCustomer;
-import com.sy.modules.entity.oa.OaRecord;
 import com.sy.modules.entity.vo.oa.OaCustomerVo;
 import com.sy.modules.entity.ws.WsMtPicture;
 
@@ -28,8 +26,6 @@ public class OaCustomerService {
 	@Autowired
 	private WsPictureDao picturedao;
 	
-	@Autowired
-	private OaRecordMapper recordmapper;
 
 	// find all customers by page
 	public PageInfo<OaCustomer> findAllCustomersByPage(OaCustomerVo customerVo) {
@@ -37,15 +33,26 @@ public class OaCustomerService {
 		if (null != customerVo) {
 			customerVo.setSeaStatus(Constants.ISDELSTATE);
 			list = customermapper.selectByExample(customerVo.toExample());
-			for(OaCustomer cus:list){
+			/*for(OaCustomer cus:list){
 				OaRecord record=recordmapper.selectByPrimaryKeyAndCId(cus.getcId());
 				cus.setRecord(record);
 				//List<OaRecord> recordList =recordmapper.selectAllRecordListByCId(cus.getcId());
 				//cus.setRecordList(recordList);
-			}
+			}*/
 		}
 		return new PageInfo<OaCustomer>(list);
 	}
+	
+	public PageInfo<OaCustomer> findAllLSCustomersByPage(OaCustomerVo customerVo) {
+		List<OaCustomer> list = new ArrayList<OaCustomer>(0);
+		if (null != customerVo) {
+			customerVo.setSeaStatus(Constants.ISDELSTATE);
+			list = customermapper.selectByExampleWithLSJob(customerVo.toExample());
+		}
+		return new PageInfo<OaCustomer>(list);
+	}
+	
+	
 	// find all customers by page in sea
 	public PageInfo<OaCustomer> findAllCustomersByPageInSea(OaCustomerVo customerVo) {
 		List<OaCustomer> list = new ArrayList<OaCustomer>(0);

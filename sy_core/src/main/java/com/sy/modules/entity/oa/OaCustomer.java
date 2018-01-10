@@ -42,8 +42,17 @@ public class OaCustomer implements Serializable {
     private OaLinkman linkman;
     private OaRecord record;
     private List<OaRecord> recordList;
+    private String lsSalary;
 
-    public OaRecord getRecord() {
+    public String getLsSalary() {
+		return lsSalary;
+	}
+
+	public void setLsSalary(String lsSalary) {
+		this.lsSalary = lsSalary;
+	}
+
+	public OaRecord getRecord() {
 		return record;
 	}
 
