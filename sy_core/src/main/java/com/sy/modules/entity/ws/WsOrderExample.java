@@ -865,6 +865,66 @@ public class WsOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andOEmpIdIsNull() {
+            addCriterion("o_emp_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdIsNotNull() {
+            addCriterion("o_emp_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdEqualTo(Integer value) {
+            addCriterion("o_emp_id =", value, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdNotEqualTo(Integer value) {
+            addCriterion("o_emp_id <>", value, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdGreaterThan(Integer value) {
+            addCriterion("o_emp_id >", value, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("o_emp_id >=", value, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdLessThan(Integer value) {
+            addCriterion("o_emp_id <", value, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdLessThanOrEqualTo(Integer value) {
+            addCriterion("o_emp_id <=", value, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdIn(List<Integer> values) {
+            addCriterion("o_emp_id in", values, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdNotIn(List<Integer> values) {
+            addCriterion("o_emp_id not in", values, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdBetween(Integer value1, Integer value2) {
+            addCriterion("o_emp_id between", value1, value2, "oEmpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOEmpIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("o_emp_id not between", value1, value2, "oEmpId");
+            return (Criteria) this;
+        }
+
         public Criteria andOUsernameIsNull() {
             addCriterion("o_username is null");
             return (Criteria) this;

@@ -46,10 +46,14 @@ public class WsOrderController {
 	@ResponseBody
 	public String saveOrder(Model model, HttpServletRequest request,@ModelAttribute WsOrder order) {
 		String oUserName=request.getParameter("user.userName");
+		String oEmpId=request.getParameter("user.id");
 		int flag = -1;
 		if (null != order) {
 			if(StringUtils.isNotBlank(oUserName)){
 				order.setoUsername(oUserName);
+			}
+			if(StringUtils.isNotBlank(oEmpId)){
+				order.setoEmpId(Integer.parseInt(oEmpId));
 			}
 			flag = orderService.saveWsOrder(order);
 		}
