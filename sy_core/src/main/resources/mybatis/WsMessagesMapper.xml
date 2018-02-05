@@ -43,9 +43,12 @@
 	<!-- 分页查看留言详细信息 -->
 	 <select id="findAllMessagesByPage" parameterType="Map" resultMap="messagesResult">
 	    select * from ws_message m left join ws_user_message um on m.message_id = um.message_id
-	 	where m.del_status = 1 and um.del_status=1 and um.user_id = #{userid}
+	 	where 1=1 and m.del_status = 1 and um.del_status=1 
+	 	<if test="userid!=null">
+	 	   and um.user_id = #{userid}
+	 	</if>
 	 	<if test="humanId!=null">
-	 	    and um.human_id=#{humanId};
+	 	    and um.human_id=#{humanId}
 	 	</if>
 	 	<if test="beginDate!=null">
 	 	    and m.create_time > #{beginDate}

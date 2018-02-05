@@ -60,7 +60,7 @@ public class WsMessagesController extends PageSet {
 		SysUser u=(SysUser) request.getSession().getAttribute(Constants.USER_LOGIN_SESSION_KEY);
 //		//获取用户ID
 		Map<String,Object> param = DataTool.getParam(request, "beginDate","endDate");
-		param.put("userid",u.getId());
+	//	param.put("userid",u.getId());
 		this.setPagination(request, param);
 		List<WsMessages> messages = messageservice.findAllMessagesByPage(param);
 		

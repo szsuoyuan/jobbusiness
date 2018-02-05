@@ -10,10 +10,10 @@ import com.sy.commons.entity.ParentEntity;
  */
 public class WsMessages extends ParentEntity {
 	private static final long serialVersionUID = 1L;
-	private String messageTitle;
-	private String messageContent;
+	private String messageTitle;//标题
+	private String messageContent;//标题描述
 	private String messageQQ;
-	private String messageEmail;
+	private String messageEmail;//图片地址
 	private String messagePhone;
 	private List<WsReply> reply;
 	public String getMessageTitle() {
