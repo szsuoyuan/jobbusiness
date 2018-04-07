@@ -48,6 +48,7 @@ public class WsSmsController extends PageSet{
 	@RequestMapping(value = "/addsms")
 	@ResponseBody
 	public String addSms(HttpServletRequest request,HttpServletResponse response,@ModelAttribute WsSms sms){
+		log.info("---entering----WsSmsController---addSms---");
 		WsSmsUser wsu=new WsSmsUser();
 		SysUser u=SessionUtil.getLoginUser(request);
 		wsu.setUser_id(u.getId());
@@ -59,8 +60,9 @@ public class WsSmsController extends PageSet{
 		else
 		{
 			boolean s=smsService.addSms(sms, wsu);
+			log.info("---entering----WsSmsController---addSms---");
 			if(s)
-				return JsonUtil.transferJsonResponse(Constants.SUCCESS,Constants.MSG_ADD_SUCCESS, "page12", null, Constants.CLOSECURRENT,"ws/showSms");
+				return JsonUtil.transferJsonResponse(Constants.SUCCESS,Constants.MSG_ADD_SUCCESS, Constants.REL_SMSMANAGER, null, Constants.CLOSECURRENT,"ws/showSms");
 			else
 				return JsonUtil.transferJsonResponse(Constants.ERROR,Constants.MSG_ADD_FAIL, null, null, null,null);
 		}
@@ -153,7 +155,7 @@ public class WsSmsController extends PageSet{
 		SysUser u=(SysUser) request.getSession().getAttribute(Constants.USER_LOGIN_SESSION_KEY);
 		sms.setUpdateName(u.getUsername());
 		smsService.update(sms);
-		return JsonUtil.transferJsonResponse(Constants.SUCCESS,Constants.MSG_UPDATE_SUCCESS, "page12", null, Constants.CLOSECURRENT,"ws/showSms");
+		return JsonUtil.transferJsonResponse(Constants.SUCCESS,Constants.MSG_UPDATE_SUCCESS, Constants.REL_SMSMANAGER, null, Constants.CLOSECURRENT,"ws/showSms");
 	}
 
 	

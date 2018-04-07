@@ -2,7 +2,7 @@
 <%@ include file="../ws/pageControl/jstlImport.jsp" %>
 <div class="pageContent">
 	<form method="post" action="${pageContext.request.contextPath}/oa/saveCustomerByUpd" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
-		<p class="contentTitle">修改客户</p>
+		<p class="contentTitle">修改公司信息</p>
 		<div class="pageFormContent" layoutH="98">
 		<input type="hidden" name="cId" value="${customer['cId'] }"/>
 		<fieldset>
@@ -35,6 +35,10 @@
 			<p>
 				<label>邮箱：</label>
 				<input type="text" size="30" name="cMail" value="${customer['cMail'] }" />
+			</p>
+			<p>
+						<label>历史费用：</label>
+						<input type="text" size="30" name="cAddress"/>
 			</p>
 			</fieldset>
 			<fieldset>
@@ -100,10 +104,10 @@
 			<fieldset>
 				<legend>住宿信息</legend>
 				<dl class="nowrap">
-					<dt>位置：</dt>
-					<dd><textarea name="cWeibo" cols="60" rows="1">${customer['cWeibo'] }</textarea></dd>
+					<dt>住宿信息：</dt>
+					<dd><textarea name="cWeibo" cols="60" rows="6">${customer['cWeibo'] }</textarea></dd>
 				</dl>
-				
+				<%-- 
 				<dl class="nowrap">
 					<dt>环境：</dt>
 					<dd><textarea name="cAddress" cols="60" rows="1">${customer['cAddress'] }</textarea></dd>
@@ -120,7 +124,7 @@
 					<dt>提示：</dt>
 					<dd><textarea name="cWechat" cols="60" rows="1">${customer['cWechat'] }</textarea></dd>
 				</dl>
-				
+				--%>
 			</fieldset>
 			<%-- 
 			<fieldset style="margin-top: 10px;" id="cptp">
@@ -147,14 +151,26 @@
 				<legend>伙食信息</legend>
 				
 				<dl class="nowrap">
-					<dt>费用：</dt>
-					<dd><textarea name="cQq" cols="60" rows="1">${customer['cQq'] }</textarea></dd>
+					<dt>伙食信息：</dt>
+					<dd><textarea name="cQq" cols="60" rows="6">${customer['cQq'] }</textarea></dd>
 				</dl>
+				<%-- 
 				<dl class="nowrap">
 					<dt>提示：</dt>
 					<dd><textarea name="cTrde" cols="60" rows="1">${customer['cTrde'] }</textarea></dd>
 				</dl>
+				--%>
 			</fieldset>
+			
+			<fieldset>
+				<legend>其它信息</legend>
+				
+				<dl class="nowrap">
+					<dt>其它信息：</dt>
+					<dd><textarea name="cTrde" cols="60" rows="6">${customer['cTrde'] }</textarea></dd>
+				</dl>
+			</fieldset>
+			
 			<fieldset style="margin-top: 10px;" id="cptp">
 				<legend>福利图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
 				<div class="image-container-food">
@@ -189,7 +205,7 @@
 				<legend>公司简介</legend>
 				<dl class="nowrap">
 					<dt>公司简介：</dt>
-					<dd><textarea name="cRemark" cols="60" rows="3">${customer['cRemark'] }</textarea></dd>
+					<dd><textarea name="cRemark" cols="100" rows="12">${customer['cRemark'] }</textarea></dd>
 				</dl>
 			</fieldset>
 		</div>

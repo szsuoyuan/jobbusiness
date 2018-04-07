@@ -2,7 +2,7 @@
 <%@ include file="../ws/pageControl/jstlImport.jsp" %>
 <div class="pageContent">
 	<form method="post" action="${pageContext.request.contextPath}/${action}" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
-		<p class="contentTitle">添加公司</p>
+		<p class="contentTitle">添加公司信息</p>
 		<div class="pageFormContent" layoutH="98">
 			
 		<fieldset>
@@ -36,6 +36,10 @@
 					<p>
 						<label>邮箱：</label>
 						<input type="text" size="30" name="cMail"/>
+					</p>
+					<p>
+						<label>历史费用：</label>
+						<input type="text" size="30" name="cAddress"/>
 					</p>
 			</fieldset>
 			<fieldset>
@@ -118,7 +122,14 @@
 				</dl>
 				--%>
 			</fieldset>
-			
+			<fieldset>
+				<legend>其它信息</legend>
+				
+				<dl class="nowrap">
+					<dt>其它信息：</dt>
+					<dd><textarea name="cTrde" cols="60" rows="6"></textarea></dd>
+				</dl>
+			</fieldset>
 			<fieldset style="margin-top: 10px;" id="cptp">
 				<legend>福利图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
 				<div class="image-container-food">
@@ -167,7 +178,7 @@
 				<legend>公司简介</legend>
 				<dl class="nowrap">
 					<dt>公司简介：</dt>
-					<dd><textarea name="cRemark" cols="60" rows="7"></textarea></dd>
+					<dd><textarea name="cRemark" cols="100" rows="12"></textarea></dd>
 				</dl>
 			</fieldset>
 		</div>

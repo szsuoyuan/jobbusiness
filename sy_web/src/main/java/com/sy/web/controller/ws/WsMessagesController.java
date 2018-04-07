@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sy.modules.entity.sys.SysUser;
-import com.sy.modules.entity.ws.WsHuman;
 import com.sy.modules.entity.ws.WsMessages;
 import com.sy.modules.entity.ws.WsMessagesUser;
 import com.sy.modules.service.ws.WsHumanService;

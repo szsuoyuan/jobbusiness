@@ -15,7 +15,7 @@
 		</c:if>
 		<div class="pageFormContent nowrap" layoutH="56">
 			<dl>
-				<dt>短信标题：</dt>
+				<dt>推荐人姓名：</dt>
 				<dd>
 				<input type="text" name="sms_title" class="required"  size="28" value="${sms.sms_title }">
 				</dd>
@@ -23,9 +23,9 @@
 			<br/><br/>
 			<div class="divider"></div>
 			<dl>
-				<dt>短信分享内容：</dt>
+				<dt>推荐人手机：</dt>
 				<dd>
-				<textarea rows="10" cols="40" name="sms_content" class="required" >${sms.sms_content}</textarea>
+				<input type="text" name="sms_content" class="required"  size="28" value="${sms.sms_content }">
 				</dd>
 			</dl>
 		</div>

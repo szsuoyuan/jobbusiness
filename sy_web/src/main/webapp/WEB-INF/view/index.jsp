@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>薇汀企业管理中心</title>
+<title>求职易管理中心</title>
 <link href="${pageContext.request.contextPath}/public/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${pageContext.request.contextPath}/public/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${pageContext.request.contextPath}/public/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
@@ -85,7 +85,7 @@
 		<div id="header">
 			<div class="headerNav">
 				<%-- <a class="logo" href="http://www.fdmaster.com" target="_blank">标志</a> --%>
-				<!-- <span class="logo1" id="mylogo"></span> --><span class="logo2">薇汀企业管理中心</span>
+				<!-- <span class="logo1" id="mylogo"></span> --><span class="logo2">求职易管理中心</span>
 				<ul class="nav">
 					<li><font color="#fff">您好：wtadmin</font></li>
 					<li><a href="http://www.szsuoyuan.com" target="_blank">官网</a></li>
