@@ -60,7 +60,7 @@ public class ApiWsOrderController extends PageSet {
 		HResult<WsOrder> result = new HResult<WsOrder>(true, "");
 		int flag = -1;
 		if (null != order) {
-			if(StringUtils.isNotBlank(order.getoNumber())){
+			if(StringUtils.isBlank(order.getoNumber())){
 				order.setoNumber(DataTool.createCoding());
 			}
 			flag = orderService.saveWsOrder(order);

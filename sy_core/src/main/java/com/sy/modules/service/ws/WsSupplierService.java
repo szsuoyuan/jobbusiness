@@ -33,4 +33,9 @@ public class WsSupplierService extends AbstractService<WsSupplier, Long, WsSuppl
     public List<WsSupplier> findAllSupplier(Map<String,Object> map){
     	return supplierdao.findAllSupplier(map);
     }
+    
+    //详情
+    public WsSupplier findSupplierDetailInfo(Integer id){
+    	return supplierdao.findById(id.longValue());
+    }
 }

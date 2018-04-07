@@ -75,47 +75,52 @@
 			<fieldset>
 				<legend>住宿信息</legend>
 				<dl class="nowrap">
-					<dt>位置：</dt>
-					<dd><textarea name="cWeibo" cols="60" rows="1"></textarea></dd>
+					<dt>住宿信息：</dt>
+					<dd><textarea name="cWeibo" cols="60" rows="6"></textarea></dd>
 				</dl>
-				
-				<dl class="nowrap">
-					<dt>环境：</dt>
-					<dd><textarea name="cAddress" cols="60" rows="1"></textarea></dd>
-				</dl>
-				<dl class="nowrap">
-					<dt>费用：</dt>
-					<dd><textarea name="cSite" cols="60" rows="1"></textarea></dd>
-				</dl>
-				<dl class="nowrap">
-					<dt>厂车：</dt>
-					<dd><textarea name="cHotel" cols="60" rows="1"></textarea></dd>
-				</dl>
-				<dl class="nowrap">
-					<dt>提示：</dt>
-					<dd><textarea name="cWechat" cols="60" rows="1"></textarea></dd>
-				</dl>
+				<%-- 
+					<dl class="nowrap">
+						<dt>环境：</dt>
+						<dd><textarea name="cAddress" cols="60" rows="1"></textarea></dd>
+					</dl>
+					<dl class="nowrap">
+						<dt>费用：</dt>
+						<dd><textarea name="cSite" cols="60" rows="1"></textarea></dd>
+					</dl>
+					<dl class="nowrap">
+						<dt>厂车：</dt>
+						<dd><textarea name="cHotel" cols="60" rows="1"></textarea></dd>
+					</dl>
+					<dl class="nowrap">
+						<dt>提示：</dt>
+						<dd><textarea name="cWechat" cols="60" rows="1"></textarea></dd>
+					</dl>
+				--%>
 			</fieldset>
+			<%-- 
 			<fieldset style="margin-top: 10px;" id="cptp">
 				<legend>住宿图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
 				<div class="image-container">
 					<!-- 显示图片 -->
 				</div>
 			</fieldset>
+			--%>
 			<fieldset>
 				<legend>伙食信息</legend>
 				<dl class="nowrap">
-					<dt>费用：</dt>
-					<dd><textarea name="cQq" cols="60" rows="1"></textarea></dd>
+					<dt>伙食信息：</dt>
+					<dd><textarea name="cQq" cols="60" rows="6"></textarea></dd>
 				</dl>
+				<%-- 
 				<dl class="nowrap">
 					<dt>提示：</dt>
 					<dd><textarea name="cTrde" cols="60" rows="1"></textarea></dd>
 				</dl>
+				--%>
 			</fieldset>
 			
 			<fieldset style="margin-top: 10px;" id="cptp">
-				<legend>伙食图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
+				<legend>福利图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
 				<div class="image-container-food">
 					<!-- 显示图片 -->
 				</div>
@@ -133,7 +138,7 @@
 				</dl>
 			</fieldset>
 			<fieldset>
-				<legend>薪资图片</legend>
+				<legend>薪资工资单图片</legend>
 				<div class='image-item'>
 								<span style='width: 200px;height: 200px;border: 1px #C4C4C4 solid; display: block; float: left; margin: 5px;'>
 								<input type='file' name='uploadPic50' class='filePrew' id='uploadPic50' fileFormat='GIF,JPG,JPEG,PNG,BMP' onchange='uploadingSalaryImage(this)'  style='width: 65px;height: 27px; margin-left: 20px;'>
@@ -162,26 +167,29 @@
 				<legend>公司简介</legend>
 				<dl class="nowrap">
 					<dt>公司简介：</dt>
-					<dd><textarea name="cRemark" cols="60" rows="3"></textarea></dd>
+					<dd><textarea name="cRemark" cols="60" rows="7"></textarea></dd>
 				</dl>
 			</fieldset>
 		</div>
 		<div class="formBar">
 			<ul style="float: left;margin-left: 5px;">
+				<%-- 
+					<li>
+						<div class="buttonActive" style="display: inline;">
+						 	<div class="buttonContent">
+						 		<button type="button" onclick="addpic()">增加住宿图片</button>
+						 	</div>
+					 	</div>
+					</li>
+				--%>
 				<li>
 					<div class="buttonActive" style="display: inline;">
 					 	<div class="buttonContent">
-					 		<button type="button" onclick="addpic()">增加住宿图片</button>
+					 		<button type="button" onclick="addpic2()">增加福利图片</button>
 					 	</div>
 				 	</div>
 				</li>
-				<li>
-					<div class="buttonActive" style="display: inline;">
-					 	<div class="buttonContent">
-					 		<button type="button" onclick="addpic2()">增加伙食图片</button>
-					 	</div>
-				 	</div>
-				</li>
+				
 			</ul>
 			<ul>
 				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->

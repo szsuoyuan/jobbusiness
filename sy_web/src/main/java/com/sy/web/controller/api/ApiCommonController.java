@@ -3,12 +3,16 @@ package com.sy.web.controller.api;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.github.pagehelper.PageInfo;
 import com.sy.commons.entity.HResult;
 import com.sy.modules.entity.vo.ws.WsFanFeiVo;
@@ -61,6 +65,19 @@ public class ApiCommonController extends PageSet {
 		return result;
 	}
 	
+	//查看门店详情
+	@RequestMapping(value = "/searchStoreInfoById")
+	@ResponseBody
+	public HResult<WsSupplier> searchStoreInfoById(HttpServletRequest request,@RequestParam("sId") Integer sId) {
+		HResult<WsSupplier> result = new HResult<>(true, "");
+		WsSupplier supplier=suppservice.findSupplierDetailInfo(sId);
+		result.setCode(Constants.SUCCESS);
+		result.setValue(Constants.MSG_GET_SUCCESS);
+		result.setObjValue(supplier);
+		return result;
+	}
+	
+
 	//关于我们
 	@RequestMapping(value = "/searchCompanyInfo")
 	@ResponseBody

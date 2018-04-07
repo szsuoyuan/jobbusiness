@@ -9,6 +9,8 @@ import com.sy.modules.entity.ws.WsFanFeiExample.Criteria;
 public class WsFanFeiVo extends BaseSearchObject<WsFanFeiExample> {
 	
 	 private String fName;
+	 
+	 private Integer fType;
 
 	public String getfName() {
 		return fName;
@@ -16,6 +18,14 @@ public class WsFanFeiVo extends BaseSearchObject<WsFanFeiExample> {
 
 	public void setfName(String fName) {
 		this.fName = fName;
+	}
+
+	public Integer getfType() {
+		return fType;
+	}
+
+	public void setfType(Integer fType) {
+		this.fType = fType;
 	}
 
 	@Override
@@ -26,6 +36,9 @@ public class WsFanFeiVo extends BaseSearchObject<WsFanFeiExample> {
 		PageHelper.startPage(this.getPageNum(), this.getNumPerPage());
 		if(this.getfName()!=null){
 			criteria.andFNameLike("%" + this.getfName() + "%");
+		}
+		if(this.getfType()!=null){
+			criteria.andFTypeEqualTo(this.getfType().byteValue());
 		}
 		return filter;
 	}

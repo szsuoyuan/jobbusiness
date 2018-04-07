@@ -69,7 +69,7 @@
 				<option value="50">50</option>
 			</select>
 			<script>
-        		$("select[name='numPerPage']").val('${customlist.pageSize}');
+        		$("select[name='numPerPage']").val('${orderList.pageSize}');
       		</script>
 			<span>条，共${orderList.total}条</span>
 		</div>

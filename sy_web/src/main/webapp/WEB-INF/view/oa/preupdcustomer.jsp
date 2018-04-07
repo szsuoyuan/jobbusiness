@@ -122,6 +122,7 @@
 				</dl>
 				
 			</fieldset>
+			<%-- 
 			<fieldset style="margin-top: 10px;" id="cptp">
 				<legend>住宿图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
 				<div class="image-container">
@@ -141,6 +142,7 @@
 					
 				</div>
 			</fieldset>
+			--%>
 			<fieldset>
 				<legend>伙食信息</legend>
 				
@@ -154,7 +156,7 @@
 				</dl>
 			</fieldset>
 			<fieldset style="margin-top: 10px;" id="cptp">
-				<legend>伙食图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
+				<legend>福利图片(<font color="#09c">建议上传500像素*500像素的图片,大小500kb以内</font>)</legend>
 				<div class="image-container-food">
 					<!-- 显示图片 -->
 					<c:if test="${not empty hsimagelist }">
@@ -193,17 +195,19 @@
 		</div>
 		<div class="formBar">
 			<ul style="float: left;margin-left: 5px;">
-				<li>
-					<div class="buttonActive" style="display: inline;">
-					 	<div class="buttonContent">
-					 		<button type="button" onclick="addpic()">增加住宿图片</button>
+				<%-- 
+					<li>
+						<div class="buttonActive" style="display: inline;">
+						 	<div class="buttonContent">
+						 		<button type="button" onclick="addpic()">增加住宿图片</button>
+						 	</div>
 					 	</div>
-				 	</div>
-				</li>
+					</li>
+				--%>
 				<li>
 					<div class="buttonActive" style="display: inline;">
 					 	<div class="buttonContent">
-					 		<button type="button" onclick="addpic2()">增加伙食图片</button>
+					 		<button type="button" onclick="addpic2()">增加福利图片</button>
 					 	</div>
 				 	</div>
 				</li>
