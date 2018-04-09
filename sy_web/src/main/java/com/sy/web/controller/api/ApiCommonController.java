@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.github.pagehelper.PageInfo;
 import com.sy.commons.entity.HResult;
+import com.sy.modules.entity.sys.SysComPicture;
 import com.sy.modules.entity.vo.ws.WsFanFeiVo;
 import com.sy.modules.entity.ws.WsAbout;
 import com.sy.modules.entity.ws.WsFanFei;
 import com.sy.modules.entity.ws.WsSupplier;
+import com.sy.modules.service.sys.SysComPictureService;
 import com.sy.modules.service.ws.WsAboutService;
 import com.sy.modules.service.ws.WsReturnFeeService;
 import com.sy.modules.service.ws.WsSupplierService;
@@ -38,6 +38,10 @@ public class ApiCommonController extends PageSet {
 	
 	@Autowired 
 	private WsAboutService aboutservice;
+	
+	@Autowired
+	private SysComPictureService compservice;
+	
 	//返费列表
 	@RequestMapping(value = "/searchAllReturnFee")
 	@ResponseBody
@@ -93,8 +97,19 @@ public class ApiCommonController extends PageSet {
 		return result;
 	}
 	
-	
-	
-	
+	/**
+	 * 查询所有首页轮播图 return json
+	 */
+	@RequestMapping(value = "/findComPicByJson")
+	@ResponseBody
+	public  HResult<List<SysComPicture>> findComPicByJson(HttpServletRequest request) {
+		HResult<List<SysComPicture>> result = new HResult<>(true, "");
+		List<SysComPicture> comlist = compservice.findAllComPic();
+		result.setCode(Constants.SUCCESS);
+		result.setValue(Constants.MSG_GET_SUCCESS);
+		result.setObjValue(comlist);
+		return result;
+	}
+
 
 }

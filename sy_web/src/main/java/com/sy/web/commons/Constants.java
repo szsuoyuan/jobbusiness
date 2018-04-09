@@ -41,7 +41,7 @@ public class Constants {
 	public static final String REL_ORDERMANAGER="030";
 	public static final String REL_FEEMANAGER="036";
 	public static final String REL_SMSMANAGER="037";
-
+	public static final String REL_SYSPICMANAGER="038";
 	// ws
 	public static final String REL_SELFMODULE = "page27";
 	public static final String REL_PHONEMANAGER = "017";

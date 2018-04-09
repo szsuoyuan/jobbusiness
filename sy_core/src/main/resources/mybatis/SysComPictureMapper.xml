@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sy.modules.dao.sys.SysComPictureDao">
+<!-- ////////////////////////////////////////////LC//////////////////////////////// -->
+ <resultMap type="com.sy.modules.entity.sys.SysComPicture" id="compicResult">
+	<id column="spid" property="id"/>
+	<result column="spname" property="picname"/>
+	<result column="spurl" property="picurl"/>
+</resultMap>
+
+    <insert id="create" parameterType="SysComPicture" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_picture(spname,spurl,create_time)
+        values(#{picname},#{picurl},#{createTime})
+    </insert>
+    <delete id="deleteById" parameterType="long">
+        delete from sys_picture where spid=#{id}
+    </delete>
+    <update id="update" parameterType="SysComPicture">
+        update sys_picture 
+        <set>
+		  <if test="picname!=null and picname!=''">spname=#{picname},</if>
+		  <if test="picurl!=null and picurl!=''">spurl=#{picurl}</if>
+        </set>
+        where spid=#{id}
+    </update>
+    <select id="findById" parameterType="long" resultType="SysComPicture">
+        select 
+          sp.spid as id, 
+          sp.spname as picname,
+          sp.spurl as picurl,
+          sp.companyid as companyinfoid
+        from sys_picture as sp
+        where sp.spid=#{id}  
+    </select>
+
+    <select id="findAllComPic" resultType="SysComPicture">
+       select
+		  sp.spid as id, 
+          sp.spname as picname,
+          sp.spurl as picurl,
+          sp.companyid as companyinfoid,
+          sp.create_name as createName,
+		  sp.create_time as createTime,
+		  sp.update_name as updateName,
+		  sp.update_time as updateTime
+       from sys_picture as sp
+    </select>
+    <!-- 分页查询所有图片-->
+	<select id="findAllComPicByPage" parameterType="map" resultType="SysComPicture" useCache="false" flushCache="true">
+	   select
+		  sp.spid as id, 
+          sp.spname as picname,
+          sp.spurl as picurl,
+          sp.companyid as companyinfoid,
+          sp.create_name as createName,
+		  sp.create_time as createTime,
+		  sp.update_name as updateName,
+		  sp.update_time as updateTime
+       from sys_picture as sp
+	   where 1=1 
+		<if test="picname!=null">
+		  and sp.spname like "%"#{picname}"%"
+		</if>
+		<if test="lowerLimit!=null and upperLimit != null">
+				limit #{lowerLimit},#{upperLimit}
+	    </if>
+	</select>
+	
+	<select id="findCountByParam" parameterType="map" resultType="long">
+	   select count(*) from sys_picture where 1=1
+	   <if test="picname!=null">
+		  and spname like "%"#{picname}"%"
+		</if>
+	</select>
+
+</mapper>
