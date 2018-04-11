@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageInfo;
 import com.sy.modules.common.Constants;
+import com.sy.modules.dao.oa.OaCustomerHisPriceDao;
 import com.sy.modules.dao.oa.OaCustomerMapper;
 import com.sy.modules.dao.ws.WsPictureDao;
 import com.sy.modules.entity.oa.OaCustomer;
+import com.sy.modules.entity.oa.OaCustomerHisPrice;
 import com.sy.modules.entity.vo.oa.OaCustomerVo;
 import com.sy.modules.entity.ws.WsMtPicture;
 
@@ -25,6 +27,9 @@ public class OaCustomerService {
 	
 	@Autowired
 	private WsPictureDao picturedao;
+	
+	@Autowired
+	private OaCustomerHisPriceDao hisPriceDao;
 	
 
 	// find all customers by page
@@ -69,6 +74,11 @@ public class OaCustomerService {
 		custom.setCreateTime(new Date());
 		custom.setUpdateTime(new Date());
 		int num = customermapper.insertSelective(custom);
+		//记录历史费用
+		OaCustomerHisPrice hisprice=new OaCustomerHisPrice();
+		hisprice.setcId(custom.getcId().intValue());
+		hisprice.setpName(custom.getcAddress());
+		hisPriceDao.create(hisprice);
 		//岗位图片
 		if(null!=custom.getJobpictures()){
 			for(WsMtPicture picture:custom.getJobpictures()){
@@ -112,6 +122,12 @@ public class OaCustomerService {
 	public int updateCustomer(OaCustomer custom) {
 		custom.setUpdateTime(new Date());
 		int num = customermapper.updateByPrimaryKeySelective(custom);
+		
+		OaCustomerHisPrice hisprice=new OaCustomerHisPrice();
+		hisprice.setcId(custom.getcId().intValue());
+		hisprice.setpName(custom.getcAddress());
+		hisPriceDao.create(hisprice);
+		
 		if(null != custom.getJobpictures()){
 			picturedao.deletePictureByCId(custom.getcId().intValue(),"job");
 			for(WsMtPicture picture:custom.getJobpictures()){

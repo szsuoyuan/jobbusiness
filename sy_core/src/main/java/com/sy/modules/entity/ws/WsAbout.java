@@ -16,6 +16,7 @@ public class WsAbout extends ParentEntity {
 	private String company_phone;
 	private String company_site;
 	private String company_trade;
+	private String company_qq;
 	private String aboutRemark;//备注信息
 	public String getAbout() {
 		return about;
@@ -76,6 +77,12 @@ public class WsAbout extends ParentEntity {
 	}
 	public void setCompany_trade(String company_trade) {
 		this.company_trade = company_trade;
+	}
+	public String getCompany_qq() {
+		return company_qq;
+	}
+	public void setCompany_qq(String company_qq) {
+		this.company_qq = company_qq;
 	}
 	
 }

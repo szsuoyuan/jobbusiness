@@ -22,7 +22,7 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="ws/preAddSms" target="dialog" title="添加短息" width="720" height="400"><span>添加</span></a></li>
+			<li><a class="add" href="ws/preAddSms" target="dialog" title="添加推荐人" width="720" height="400"><span>添加</span></a></li>
 			<li><a class="edit" href="ws/smsDetails?id={sid_user}&result=xg" target="dialog" width="720" height="400" title="修改短息"><span>修改</span></a></li>
 			<li><a class="delete" href="ws/deleteSms?id={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 		<%--<li><a class="edit" href="ws/smsDetails?id={sid_user}&result=ck" target="dialog" width="720" height="400" title="短信内容"><span>查看</span></a></li>--%>

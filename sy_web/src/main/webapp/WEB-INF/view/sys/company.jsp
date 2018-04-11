@@ -50,7 +50,15 @@
 			<br>
 			<div class="divider"></div>
 			<div class="unit">
-				<label>传真：</label> <input type="text" name="company_fax"
+				<label>QQ：</label> <input type="text" name="qqnumber"
+					maxlength="50" size="40" class="phone"
+					value="${companyinfo.qqnumber }" />
+			</div>
+			<br>
+			<br>
+			<div class="divider"></div>
+			<div class="unit">
+				<label>微信号：</label> <input type="text" name="company_fax"
 					maxlength="50" size="40" value="${companyinfo.companyfax }" />
 			</div>
 			<br>

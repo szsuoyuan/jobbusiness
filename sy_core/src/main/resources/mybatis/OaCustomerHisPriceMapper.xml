@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sy.modules.dao.oa.OaCustomerHisPriceDao" >
+
+<resultMap type="com.sy.modules.entity.oa.OaCustomerHisPrice" id="compicResult">
+	<id column="p_id" property="id"/>
+	<result column="c_id" property="cId"/>
+	<result column="p_name" property="pName"/>
+	<result column="p_remark" property="pRemark"/>
+</resultMap>
+
+	<insert id="create" parameterType="OaCustomerHisPrice"  useGeneratedKeys="true" keyProperty="pId">
+	     insert into oa_customer_his_price(c_id,p_name,create_time) 
+	        values(#{cId},#{pName},#{createTime})
+	</insert>
+	
+	<select id="findAllHisPriceByPage" parameterType="map" resultType="OaCustomerHisPrice" useCache="false" flushCache="true">
+	   select
+		  sp.p_id as pId, 
+		  sp.c_id as cId,
+		  sp.p_name as pName,
+		  sp.p_remark as pRemark,
+		  sp.create_time as createTime,
+		  sp.update_time as updateTime
+       from oa_customer_his_price as sp
+	   where 1=1 
+	   <if test="cId != null">
+	 	    and sp.c_id = #{cId}
+	 	</if>
+		<if test="lowerLimit!=null and upperLimit != null">
+				limit #{lowerLimit},#{upperLimit}
+	    </if>
+	</select>
+ 
+</mapper>

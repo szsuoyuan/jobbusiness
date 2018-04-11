@@ -38,7 +38,7 @@
 			</p>
 			<p>
 						<label>历史费用：</label>
-						<input type="text" size="30" name="cAddress"/>
+						<input type="text" size="30" name="cAddress" value="${customer['cAddress'] }" />
 			</p>
 			</fieldset>
 			<fieldset>

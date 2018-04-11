@@ -27,8 +27,8 @@ public class WsSmsService extends AbstractService<WsSms,Long,WsSmsDao> {
 	public boolean addSms(WsSms ws,WsSmsUser wsu){
 		boolean success = false;
 		smsdao.create(ws);
-		wsu.setSms_id(ws.getId());
-		smsdao.addSmsUser(wsu);
+		//wsu.setSms_id(ws.getId());
+		//smsdao.addSmsUser(wsu);
 		success = true;
 		return success;
 	}

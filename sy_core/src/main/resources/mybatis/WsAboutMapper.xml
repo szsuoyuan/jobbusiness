@@ -26,6 +26,7 @@
 		sc.company_phone as company_phone,
 		sc.company_site as company_site,
 		sc.company_trade as company_trade,
+		sc.company_qq as company_qq,
 		mf.create_name as createName,
 		mf.create_time as createTime,
 		mf.update_time as updateTime,

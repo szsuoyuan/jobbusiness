@@ -34,7 +34,7 @@
 	</update>
 	<!-- 删除短信 -->
 	<update id="deleteById" parameterType="Long">
-	    update ws_user_sms set ws_user_sms.del_status=0 where sms_id=#{id}
+	    update ws_sms set ws_sms.del_status=0 where sms_id=#{id}
 	</update>
 	<!-- 增加短信 -->
 	<insert id="create" parameterType="WsSms" keyProperty="id" useGeneratedKeys="true">
@@ -45,11 +45,16 @@
 	     insert into ws_user_sms(sms_id,user_id,create_name,create_time)values(#{sms_id},#{user_id},#{createName},#{createTime})
 	 </insert>
 	<!--分页查询短信 -->
-	<select id="findAllByPage"  resultMap="smsResult" parameterType="Map">
-	    select  *  from ws_sms  left join ws_user_sms 
+	
+	<!-- 
+	 select  *  from ws_sms  left join ws_user_sms 
 	    on  ws_sms.sms_id=ws_user_sms.sms_id 
 	    where ws_user_sms.user_id=#{userid} 
 	    and ws_user_sms.del_status=1 
+	
+	 -->
+	<select id="findAllByPage"  resultMap="smsResult" parameterType="Map">
+	    select  *  from ws_sms where 1=1 and  ws_sms.del_status=1 
 	    <if test="content!=null">
 	 	    and ws_sms.sms_content like CONCAT('%',#{content},'%')
 	 	</if>
