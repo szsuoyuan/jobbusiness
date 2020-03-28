@@ -10,14 +10,13 @@ import com.sy.modules.utils.HtmlUtil;
  */
 public class Functions {
 
-    public static String filterHtmlTags(String param) {
-    	String str="";
-    	if(StringUtils.isNotBlank(param)) {
-    		str=HtmlUtil.delHTMLTag(param);
-    	}
-    	return str.toString();
-    }
-    
-   
+	public static String filterHtmlTags(String param) {
+		String str = "";
+		if (StringUtils.isNotBlank(param)) {
+			str = HtmlUtil.delHTMLTag(param);
+		}
+		return str.toString();
+	}
+
 }
 
