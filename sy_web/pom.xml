@@ -14,7 +14,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<shiro.version>1.2.1</shiro.version>
+		<shiro.version>1.7.1</shiro.version>
 	</properties>
 
 	<dependencies>
